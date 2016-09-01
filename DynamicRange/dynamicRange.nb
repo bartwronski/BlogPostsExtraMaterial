@@ -1,0 +1,2174 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     97106,       2165]
+NotebookOptionsPosition[     95109,       2096]
+NotebookOutlinePosition[     95625,       2116]
+CellTagsIndexPosition[     95582,       2113]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Set", " ", "the", " ", "folder", " ", "for", " ", "saving", " ", "gifs"}],
+    " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"SetDirectory", "@", 
+    RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.6816777013486395`*^9, 3.681677715471463*^9}, 
+   3.6816794263465896`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Function", " ", "finding", " ", "EV", " ", "stops", " ", "corresponding", 
+    " ", "to", " ", "min", " ", "and", " ", "max", " ", "values", " ", "and", 
+    " ", "plotting", " ", "them"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"plotDynamicRange", "[", 
+     RowBox[{
+     "f_", ",", "minValFinal_", ",", "maxValFinal_", ",", "plotMinRange_", 
+      ",", "plotMaxRange_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"minValue", ",", "maxValue"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Set", " ", "@@@", 
+         RowBox[{
+          RowBox[{"Solve", "[", 
+           RowBox[{
+            RowBox[{"Rationalize", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"f", "[", 
+                RowBox[{"Power", "[", 
+                 RowBox[{"2", ",", "minValue"}], "]"}], "]"}], "==", 
+               "minValFinal"}], "&&", 
+              RowBox[{
+               RowBox[{"f", "[", 
+                RowBox[{"Power", "[", 
+                 RowBox[{"2", ",", "maxValue"}], "]"}], "]"}], "==", 
+               "maxValFinal"}]}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"minValue", ",", "maxValue"}], "}"}], ",", "Reals"}], 
+           "]"}], "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"ListPlot", "[", 
+           RowBox[{
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"x", ",", 
+                RowBox[{"f", "[", 
+                 RowBox[{"Power", "[", 
+                  RowBox[{"2", ",", "x"}], "]"}], "]"}]}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"x", ",", 
+                RowBox[{"Ceiling", "[", "minValue", "]"}], ",", 
+                RowBox[{"Floor", "[", "maxValue", "]"}]}], "}"}]}], "]"}], 
+            ",", 
+            RowBox[{"PlotStyle", "\[Rule]", 
+             RowBox[{"PointSize", "[", "0.02", "]"}]}], ",", 
+            RowBox[{"PlotRange", "\[Rule]", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"plotMinRange", ",", "plotMaxRange"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"-", "0.1"}], ",", "1.1"}], "}"}]}], "}"}]}], ",", 
+            RowBox[{"ImageSize", "\[Rule]", "600"}]}], "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Graphics", "[", 
+           RowBox[{"Text", "[", 
+            RowBox[{
+             RowBox[{"StringForm", "[", 
+              RowBox[{"\"\<Function            = `1`\>\"", ",", "f"}], "]"}], 
+             ",", 
+             RowBox[{"{", 
+              RowBox[{"plotMinRange", ",", "0.6"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "]"}], "]"}], ",", 
+          RowBox[{"Graphics", "[", 
+           RowBox[{"Text", "[", 
+            RowBox[{
+             RowBox[{"StringForm", "[", 
+              RowBox[{"\"\<Min value         = `1`\>\"", ",", 
+               RowBox[{"N", "[", "minValue", "]"}]}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"plotMinRange", ",", "0.5"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "]"}], "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Graphics", "[", 
+           RowBox[{"Text", "[", 
+            RowBox[{
+             RowBox[{"StringForm", "[", 
+              RowBox[{"\"\<Max value         = `1`\>\"", ",", 
+               RowBox[{"N", "[", "maxValue", "]"}]}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"plotMinRange", ",", "0.4"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "]"}], "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Graphics", "[", 
+           RowBox[{"Text", "[", 
+            RowBox[{
+             RowBox[{"StringForm", "[", 
+              RowBox[{"\"\<Dynamic range = `1`\>\"", ",", 
+               RowBox[{"N", "[", 
+                RowBox[{"maxValue", "-", "minValue"}], "]"}]}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"plotMinRange", ",", "0.3"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "]"}], "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Graphics", "[", 
+           RowBox[{"{", 
+            RowBox[{"Red", ",", 
+             RowBox[{"Arrowheads", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "0.03"}], ",", ".03"}], "}"}], "]"}], ",", 
+             RowBox[{"Thickness", "\[Rule]", "0.005"}], ",", 
+             RowBox[{"Arrow", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"minValue", ",", 
+                  RowBox[{"-", "0.05"}]}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"maxValue", ",", 
+                  RowBox[{"-", "0.05"}]}], "}"}]}], "}"}], "]"}]}], "}"}], 
+           "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"Graphics", "[", 
+             RowBox[{"{", 
+              RowBox[{"Green", ",", 
+               RowBox[{"Thickness", "\[Rule]", "0.005"}], ",", 
+               RowBox[{"Line", "[", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{"y", ",", 
+                    RowBox[{"-", "0.01"}]}], "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"y", ",", "0.03"}], "}"}]}], "}"}], "]"}]}], "}"}],
+              "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"y", ",", 
+              RowBox[{"Ceiling", "[", "minValue", "]"}], ",", 
+              RowBox[{"Floor", "[", "maxValue", "]"}]}], "}"}]}], "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"Graphics", "[", 
+             RowBox[{"{", 
+              RowBox[{"Blue", ",", 
+               RowBox[{"Thickness", "\[Rule]", "0.005"}], ",", 
+               RowBox[{"Line", "[", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"-", 
+                    RowBox[{"(", 
+                    RowBox[{"plotMaxRange", "-", "plotMinRange"}], ")"}]}], 
+                    "/", "100.0"}], ",", 
+                    RowBox[{"f", "[", 
+                    RowBox[{"Power", "[", 
+                    RowBox[{"2", ",", "z"}], "]"}], "]"}]}], "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"plotMaxRange", "-", "plotMinRange"}], ")"}], "/",
+                     "100.0"}], ",", 
+                    RowBox[{"f", "[", 
+                    RowBox[{"Power", "[", 
+                    RowBox[{"2", ",", "z"}], "]"}], "]"}]}], "}"}]}], "}"}], 
+                "]"}]}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"z", ",", 
+              RowBox[{"Ceiling", "[", "minValue", "]"}], ",", 
+              RowBox[{"Floor", "[", "maxValue", "]"}]}], "}"}]}], "]"}]}], 
+         "\[IndentingNewLine]", "}"}]}], "}"}]}], "]"}]}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.681677727322833*^9, 3.6816777627509174`*^9}, 
+   3.681678320846593*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "Display", " ", "dynamic", " ", "range", " ", "for", " ", "linear", " ", 
+     "encoding"}], ",", " ", 
+    RowBox[{"no", " ", "gamma"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Show", "[", 
+   RowBox[{"plotDynamicRange", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"x", ",", "x"}], "]"}], ",", 
+     RowBox[{"1", "/", "256"}], ",", "1", ",", 
+     RowBox[{"-", "10"}], ",", "2"}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6816777792962255`*^9, 3.681677809212208*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {{}, 
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.02], 
+      AbsoluteThickness[1.6], 
+      PointBox[{{-8., 0.00390625}, {-7., 0.0078125}, {-6., 0.015625}, {-5., 
+       0.03125}, {-4., 0.0625}, {-3., 0.125}, {-2., 0.25}, {-1., 0.5}, {0., 
+       1.}}]}, {}}, {}}, InsetBox[
+    InterpretationBox["\<\"Function            = \
+\\!\\(\\*FormBox[RowBox[{\\\"x\\\", \\\"\[Function]\\\", \\\"x\\\"}], \
+TraditionalForm]\\)\"\>",
+     StringForm["Function            = `1`", 
+      Function[$CellContext`x, $CellContext`x]],
+     Editable->False], {-10, 0.6}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Min value         = \\!\\(\\*FormBox[RowBox[{\\\"-\
+\\\", \\\"8.`\\\"}], TraditionalForm]\\)\"\>",
+     StringForm["Min value         = `1`", -8.],
+     Editable->False], {-10, 0.5}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Max value         = \\!\\(\\*FormBox[\\\"0.`\\\", \
+TraditionalForm]\\)\"\>",
+     StringForm["Max value         = `1`", 0.],
+     Editable->False], {-10, 0.4}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Dynamic range = \\!\\(\\*FormBox[\\\"8.`\\\", \
+TraditionalForm]\\)\"\>",
+     StringForm["Dynamic range = `1`", 8.],
+     Editable->False], {-10, 0.3}, {-1, 0}], 
+   {RGBColor[1, 0, 0], Thickness[0.005], Arrowheads[{-0.03, 0.03}], 
+    ArrowBox[{{-8, -0.05}, {0, -0.05}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-8, -0.01}, {-8, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-7, -0.01}, {-7, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-6, -0.01}, {-6, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-5, -0.01}, {-5, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-4, -0.01}, {-4, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-3, -0.01}, {-3, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-2, -0.01}, {-2, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-1, -0.01}, {-1, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{0, -0.01}, {0, 0.03}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[NCache[{{-0.12, Rational[1, 256]}, {
+       0.12, Rational[1, 256]}}, {{-0.12, 0.00390625}, {0.12, 0.00390625}}]]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[NCache[{{-0.12, Rational[1, 128]}, {
+       0.12, Rational[1, 128]}}, {{-0.12, 0.0078125}, {0.12, 0.0078125}}]]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[NCache[{{-0.12, Rational[1, 64]}, {
+       0.12, Rational[1, 64]}}, {{-0.12, 0.015625}, {0.12, 0.015625}}]]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[NCache[{{-0.12, Rational[1, 32]}, {
+       0.12, Rational[1, 32]}}, {{-0.12, 0.03125}, {0.12, 0.03125}}]]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[NCache[{{-0.12, Rational[1, 16]}, {
+       0.12, Rational[1, 16]}}, {{-0.12, 0.0625}, {0.12, 0.0625}}]]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[NCache[{{-0.12, Rational[1, 8]}, {0.12, Rational[1, 8]}}, {{-0.12,
+       0.125}, {0.12, 0.125}}]]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[NCache[{{-0.12, Rational[1, 4]}, {0.12, Rational[1, 4]}}, {{-0.12,
+       0.25}, {0.12, 0.25}}]]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[NCache[{{-0.12, Rational[1, 2]}, {0.12, Rational[1, 2]}}, {{-0.12,
+       0.5}, {0.12, 0.5}}]]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], LineBox[{{-0.12, 1}, {0.12, 1}}]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImageSize->600,
+  Method->{},
+  PlotRange->{{-10, 2}, {-0.1, 1.1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0, 0}, {0, 0}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.6816787295526247`*^9, 3.6816788853952074`*^9, 
+  3.6816795863795896`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Display", " ", "how", " ", "exposure", " ", "just", " ", "shifts", " ", 
+    "the", " ", "dynamic", " ", "range"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Animate", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"y", "=", 
+      RowBox[{"N", "[", 
+       RowBox[{"2", "^", 
+        RowBox[{"-", "a"}]}], "]"}]}], ";", 
+     RowBox[{"Show", "[", 
+      RowBox[{"Quiet", "@", 
+       RowBox[{"plotDynamicRange", "[", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{"Evaluate", "[", 
+            RowBox[{"y", "*", "x"}], "]"}]}], "]"}], ",", 
+         RowBox[{"1", "/", "256"}], ",", "1", ",", 
+         RowBox[{"-", "10"}], ",", "2"}], "]"}]}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"a", ",", 
+      RowBox[{"-", "2"}], ",", "2", ",", "0.05"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.681677828115988*^9, 3.6816778434130464`*^9}, {
+  3.68167944324459*^9, 3.6816794443395896`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 1.35, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`a$$], -2, 2, 0.05}}, Typeset`size$$ = {
+    600., {180., 184.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`a$155777$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`a$$ = -2}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`a$$, $CellContext`a$155777$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`y = N[2^(-$CellContext`a$$)]; Show[
+         Quiet[
+          $CellContext`plotDynamicRange[
+           Function[$CellContext`x, 
+            Evaluate[$CellContext`y $CellContext`x]], 1/256, 1, -10, 2]]]), 
+      "Specifications" :> {{$CellContext`a$$, -2, 2, 0.05, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{647., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.6816787296886387`*^9, 3.6816788855332212`*^9, 
+  3.6816795878525896`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Save", " ", "it", " ", "to", " ", "a", " ", "gif", " ", "file"}], 
+   " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Quiet", "@", 
+    RowBox[{"Export", "[", 
+     RowBox[{"\"\<exposure.gif\>\"", ",", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"y", "=", 
+          RowBox[{"N", "[", 
+           RowBox[{"2", "^", 
+            RowBox[{"-", "a"}]}], "]"}]}], ";", 
+         RowBox[{"Show", "[", 
+          RowBox[{"plotDynamicRange", "[", 
+           RowBox[{
+            RowBox[{"Function", "[", 
+             RowBox[{"x", ",", 
+              RowBox[{"Evaluate", "[", 
+               RowBox[{"y", "*", "x"}], "]"}]}], "]"}], ",", 
+            RowBox[{"1", "/", "256"}], ",", "1", ",", 
+            RowBox[{"-", "10"}], ",", "2"}], "]"}], "]"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", 
+          RowBox[{"-", "2"}], ",", "2", ",", "0.05"}], "}"}]}], "]"}]}], 
+     "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.681677895612484*^9, 3.6816779051543922`*^9}, 
+   3.681677958359313*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "Display", " ", "how", " ", "gamma", " ", "affects", " ", "dynamic", " ", 
+     "range"}], " ", "-", " ", 
+    RowBox[{"stretching", " ", "and", " ", "squishing", " ", "it"}]}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Animate", "[", 
+    RowBox[{
+     RowBox[{"Show", "[", 
+      RowBox[{"plotDynamicRange", "[", 
+       RowBox[{
+        RowBox[{"Function", "[", 
+         RowBox[{"x", ",", 
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"Power", "[", 
+            RowBox[{"x", ",", "a"}], "]"}], "]"}]}], "]"}], ",", 
+        RowBox[{"1", "/", "256"}], ",", "1", ",", 
+        RowBox[{"-", "10"}], ",", "2"}], "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"a", ",", "0.8", ",", "2.0", ",", "0.02"}], "}"}]}], "]"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.681677937918269*^9, 3.6816779466781454`*^9}, {
+  3.6816794625685897`*^9, 3.6816794629605894`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 1.6600000000000001`, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`a$$], 0.8, 2., 0.02}}, Typeset`size$$ = {
+    600., {180., 184.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`a$198442$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`a$$ = 0.8}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`a$$, $CellContext`a$198442$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Show[
+        $CellContext`plotDynamicRange[
+         Function[$CellContext`x$, 
+          Evaluate[$CellContext`x$^$CellContext`a$$]], 1/256, 1, -10, 2]], 
+      "Specifications" :> {{$CellContext`a$$, 0.8, 2., 0.02, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{647., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.681678751877857*^9, 3.6816788990955772`*^9, 
+  3.6816796083645897`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Save", " ", "it", " ", "to", " ", "a", " ", "gif", " ", "file"}], 
+   " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Quiet", "@", 
+    RowBox[{"Export", "[", 
+     RowBox[{"\"\<gamma.gif\>\"", ",", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"Show", "[", 
+         RowBox[{"plotDynamicRange", "[", 
+          RowBox[{
+           RowBox[{"Function", "[", 
+            RowBox[{"x", ",", 
+             RowBox[{"Power", "[", 
+              RowBox[{"x", ",", "a"}], "]"}]}], "]"}], ",", 
+           RowBox[{"1", "/", "256"}], ",", "1", ",", 
+           RowBox[{"-", "10"}], ",", "2"}], "]"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", "0.8", ",", "2.0", ",", "0.02"}], "}"}]}], "]"}]}],
+      "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{
+  3.6816779572312*^9, {3.6816794773475895`*^9, 3.68167947771159*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Define", " ", "a", " ", "\"\<gammaShift\>\"", " ", "function"}], 
+    ",", " ", 
+    RowBox[{"gamma", " ", "+", " ", 
+     RowBox[{"exposure", " ", "shift"}]}], ",", " ", 
+    RowBox[{"so", " ", "a", " ", "contrast", " ", "operation"}]}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"gammaShift", "[", 
+    RowBox[{"x_", ",", "g_", ",", "p_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Power", "[", 
+      RowBox[{"x", ",", "g"}], "]"}], "/", 
+     RowBox[{"Power", "[", 
+      RowBox[{"p", ",", "g"}], "]"}]}], "*", "p"}]}]}]], "Input",
+ CellChangeTimes->{
+  3.6816783027205935`*^9, {3.681678342875593*^9, 3.6816783959535933`*^9}, {
+   3.6816785388415933`*^9, 3.681678629876593*^9}, 3.6816794919315896`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Show", " ", "an", " ", "example", " ", "of", " ", "increasing", " ", 
+    "the", " ", "contrast"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Show", "[", 
+   RowBox[{"Quiet", "@", 
+    RowBox[{"plotDynamicRange", "[", 
+     RowBox[{
+      RowBox[{"Function", "[", 
+       RowBox[{"x", ",", 
+        RowBox[{"gammaShift", "[", 
+         RowBox[{"x", ",", "2.0", ",", "0.18"}], "]"}]}], "]"}], ",", 
+      RowBox[{"1", "/", "256"}], ",", "1", ",", 
+      RowBox[{"-", "20"}], ",", "2"}], "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{
+  3.6816783027205935`*^9, {3.681678342875593*^9, 3.6816783959535933`*^9}, {
+   3.6816785388415933`*^9, 3.681678629876593*^9}, {3.6816794919315896`*^9, 
+   3.68167951811759*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {{}, 
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.02], 
+      AbsoluteThickness[1.6], 
+      PointBox[{{-5., 0.005425347222222222}, {-4., 
+       0.021701388888888888`}, {-3., 0.08680555555555555}, {-2., 
+       0.3472222222222222}}]}, {}}, {}}, InsetBox[
+    InterpretationBox["\<\"Function            = \
+\\!\\(\\*FormBox[RowBox[{\\\"x\\\", \\\"\[Function]\\\", \
+RowBox[{\\\"gammaShift\\\", \\\"(\\\", RowBox[{\\\"x\\\", \\\",\\\", \
+\\\"2.`\\\", \\\",\\\", \\\"0.18`\\\"}], \\\")\\\"}]}], TraditionalForm]\\)\"\
+\>",
+     StringForm["Function            = `1`", 
+      Function[$CellContext`x, 
+       $CellContext`gammaShift[$CellContext`x, 2., 0.18]]],
+     Editable->False], {-20, 0.6}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Min value         = \\!\\(\\*FormBox[RowBox[{\\\"-\
+\\\", \\\"5.2369655941662066`\\\"}], TraditionalForm]\\)\"\>",
+     StringForm["Min value         = `1`", -5.2369655941662066`],
+     Editable->False], {-20, 0.5}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Max value         = \\!\\(\\*FormBox[RowBox[{\\\"-\
+\\\", \\\"1.2369655941662059`\\\"}], TraditionalForm]\\)\"\>",
+     StringForm["Max value         = `1`", -1.2369655941662059`],
+     Editable->False], {-20, 0.4}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Dynamic range = \
+\\!\\(\\*FormBox[\\\"4.000000000000001`\\\", TraditionalForm]\\)\"\>",
+     StringForm["Dynamic range = `1`", 4.000000000000001],
+     Editable->False], {-20, 0.3}, {-1, 0}], 
+   {RGBColor[1, 0, 0], Thickness[0.005], Arrowheads[{-0.03, 0.03}], 
+    ArrowBox[NCache[{{
+       Rational[1, 2] 
+        Log[2]^(-1) ((-9) Log[2] + 2 Log[3] - 2 Log[5]), -0.05}, {
+       Rational[1, 2] 
+        Log[2]^(-1) (-Log[2] + 2 Log[3] - 2 
+         Log[5]), -0.05}}, {{-5.2369655941662066`, -0.05}, \
+{-1.2369655941662059`, -0.05}}]]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-5, -0.01}, {-5, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-4, -0.01}, {-4, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-3, -0.01}, {-3, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-2, -0.01}, {-2, 0.03}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.005425347222222222}, {0.22, 0.005425347222222222}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.021701388888888888`}, {0.22, 0.021701388888888888`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.08680555555555555}, {0.22, 0.08680555555555555}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.3472222222222222}, {0.22, 0.3472222222222222}}]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImageSize->600,
+  Method->{},
+  PlotRange->{{-20, 2}, {-0.1, 1.1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0, 0}, {0, 0}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.68167961806059*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Animation", " ", "example", " ", "of", " ", "contrast"}], " ", 
+   "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"Animate", "[", 
+   RowBox[{
+    RowBox[{"Show", "[", 
+     RowBox[{"Quiet", "@", 
+      RowBox[{"plotDynamicRange", "[", 
+       RowBox[{
+        RowBox[{"Function", "[", 
+         RowBox[{"x", ",", 
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"gammaShift", "[", 
+            RowBox[{"x", ",", "a", ",", "0.18"}], "]"}], "]"}]}], "]"}], ",", 
+        RowBox[{"1", "/", "256"}], ",", "1", ",", 
+        RowBox[{"-", "10"}], ",", "2"}], "]"}]}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"a", ",", "1.0", ",", "2.0", ",", "0.02"}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{
+  3.6816783027205935`*^9, {3.681678342875593*^9, 3.6816783959535933`*^9}, {
+   3.6816785388415933`*^9, 3.681678629876593*^9}, {3.6816794919315896`*^9, 
+   3.6816795143895893`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 1.74, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`a$$], 1., 2., 0.02}}, Typeset`size$$ = {
+    600., {180., 184.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`a$206920$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`a$$ = 1.}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`a$$, $CellContext`a$206920$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Show[
+        Quiet[
+         $CellContext`plotDynamicRange[
+          Function[$CellContext`x$, 
+           Evaluate[
+            $CellContext`gammaShift[$CellContext`x$, $CellContext`a$$, 
+             0.18]]], 1/256, 1, -10, 2]]], 
+      "Specifications" :> {{$CellContext`a$$, 1., 2., 0.02, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{647., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.68167961811759*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Save", " ", "it", " ", "to", " ", "a", " ", "gif"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{"\"\<contrast.gif\>\"", ",", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"Quiet", "@", 
+         RowBox[{"Show", "[", 
+          RowBox[{"plotDynamicRange", "[", 
+           RowBox[{
+            RowBox[{"Function", "[", 
+             RowBox[{"x", ",", 
+              RowBox[{"Evaluate", "[", 
+               RowBox[{"gammaShift", "[", 
+                RowBox[{"x", ",", "a", ",", "0.18"}], "]"}], "]"}]}], "]"}], 
+            ",", 
+            RowBox[{"1", "/", "256"}], ",", "1", ",", 
+            RowBox[{"-", "10"}], ",", "2"}], "]"}], "]"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", "1.0", ",", "2.0", ",", "0.02"}], "}"}]}], "]"}]}],
+      "]"}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{
+  3.6816783027205935`*^9, {3.681678342875593*^9, 3.6816783959535933`*^9}, {
+   3.6816785388415933`*^9, 3.681678629876593*^9}, {3.6816794919315896`*^9, 
+   3.6816795087015896`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Display", " ", "how", " ", "gamma", " ", "2.2", " ", "affects", " ", 
+    "the", " ", "dynamic", " ", "range"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Show", "[", 
+   RowBox[{"plotDynamicRange", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"x", ",", 
+       RowBox[{"Power", "[", 
+        RowBox[{"x", ",", 
+         RowBox[{"1", "/", "2.2"}]}], "]"}]}], "]"}], ",", 
+     RowBox[{"1", "/", "256"}], ",", "1", ",", 
+     RowBox[{"-", "20"}], ",", "2"}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.68167952797359*^9, 3.6816795284605894`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {{}, 
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.02], 
+      AbsoluteThickness[1.6], 
+      PointBox[{{-17., 0.004719099392204873}, {-16., 
+       0.006466822499100085}, {-15., 0.008861816579652054}, {-14., 
+       0.012143799076335308`}, {-13., 0.01664126702249942}, {-12., 
+       0.0228043766512726}, {-11., 0.03125000000000001}, {-10., 
+       0.04282346827250387}, {-9., 0.05868318191635665}, {-8., 
+       0.0804165561255895}, {-7., 0.11019890687450265`}, {-6., 
+       0.15101118055055593`}, {-5., 0.2069383199712027}, {-4., 
+       0.28357813054886566`}, {-3., 0.38860157044272986`}, {-2., 
+       0.5325205447199813}, {-1., 0.7297400528407231}, {0., 1.}}]}, {}}, {}}, 
+   InsetBox[
+    InterpretationBox["\<\"Function            = \
+\\!\\(\\*FormBox[RowBox[{\\\"x\\\", \\\"\[Function]\\\", SuperscriptBox[\\\"x\
+\\\", RowBox[{\\\"1\\\", \\\"/\\\", \\\"2.2`\\\"}]]}], \
+TraditionalForm]\\)\"\>",
+     StringForm["Function            = `1`", 
+      Function[$CellContext`x, $CellContext`x^(1/2.2)]],
+     Editable->False], {-20, 0.6}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Min value         = \\!\\(\\*FormBox[RowBox[{\\\"-\
+\\\", \\\"17.6`\\\"}], TraditionalForm]\\)\"\>",
+     StringForm["Min value         = `1`", -17.6],
+     Editable->False], {-20, 0.5}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Max value         = \\!\\(\\*FormBox[\\\"0.`\\\", \
+TraditionalForm]\\)\"\>",
+     StringForm["Max value         = `1`", 0.],
+     Editable->False], {-20, 0.4}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Dynamic range = \\!\\(\\*FormBox[\\\"17.6`\\\", \
+TraditionalForm]\\)\"\>",
+     StringForm["Dynamic range = `1`", 17.6],
+     Editable->False], {-20, 0.3}, {-1, 0}], 
+   {RGBColor[1, 0, 0], Thickness[0.005], Arrowheads[{-0.03, 0.03}], 
+    ArrowBox[NCache[{{Rational[-88, 5], -0.05}, {
+       0, -0.05}}, {{-17.6, -0.05}, {0, -0.05}}]]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-17, -0.01}, {-17, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-16, -0.01}, {-16, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-15, -0.01}, {-15, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-14, -0.01}, {-14, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-13, -0.01}, {-13, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-12, -0.01}, {-12, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-11, -0.01}, {-11, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-10, -0.01}, {-10, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-9, -0.01}, {-9, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-8, -0.01}, {-8, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-7, -0.01}, {-7, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-6, -0.01}, {-6, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-5, -0.01}, {-5, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-4, -0.01}, {-4, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-3, -0.01}, {-3, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-2, -0.01}, {-2, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-1, -0.01}, {-1, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{0, -0.01}, {0, 0.03}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.004719099392204873}, {0.22, 0.004719099392204873}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.006466822499100085}, {0.22, 0.006466822499100085}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.008861816579652054}, {0.22, 0.008861816579652054}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.012143799076335308`}, {0.22, 0.012143799076335308`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.01664126702249942}, {0.22, 0.01664126702249942}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.0228043766512726}, {0.22, 0.0228043766512726}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.03125000000000001}, {0.22, 0.03125000000000001}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.04282346827250387}, {0.22, 0.04282346827250387}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.05868318191635665}, {0.22, 0.05868318191635665}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.0804165561255895}, {0.22, 0.0804165561255895}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.11019890687450265`}, {0.22, 0.11019890687450265`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.15101118055055593`}, {0.22, 0.15101118055055593`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.2069383199712027}, {0.22, 0.2069383199712027}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.28357813054886566`}, {0.22, 0.28357813054886566`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.38860157044272986`}, {0.22, 0.38860157044272986`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.5325205447199813}, {0.22, 0.5325205447199813}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.7297400528407231}, {0.22, 0.7297400528407231}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], LineBox[{{-0.22, 1.}, {0.22, 1.}}]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImageSize->600,
+  Method->{},
+  PlotRange->{{-20, 2}, {-0.1, 1.1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0, 0}, {0, 0}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.681678780233692*^9, 3.68167891812148*^9, 
+  3.6816796261495895`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Display", " ", "the", " ", "difference", " ", "between", " ", "gamma", 
+    " ", "2.2", " ", "and", " ", "2.4"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"ListAnimate", "[", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"y", ",", 
+       RowBox[{"Show", "[", 
+        RowBox[{"plotDynamicRange", "[", 
+         RowBox[{
+          RowBox[{"Function", "[", 
+           RowBox[{"x", ",", 
+            RowBox[{"Power", "[", 
+             RowBox[{"x", ",", "y"}], "]"}]}], "]"}], ",", 
+          RowBox[{"1", "/", "256"}], ",", "1", ",", 
+          RowBox[{"-", "20"}], ",", "2"}], "]"}], "]"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1", "/", "2.2"}], ",", 
+       RowBox[{"1", "/", "2.4"}]}], "}"}]}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6816780502004967`*^9, 3.68167807594007*^9}, 
+   3.681678300855593*^9, {3.6816795350695896`*^9, 3.6816795368685894`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`i1012$$ = 1, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {
+    "\"min\"" :> {$CellContext`i1012$$ = 1}, 
+     "\"max\"" :> {$CellContext`i1012$$ = 2}}, Typeset`bookmarkMode$$ = 
+    "Menu", Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`i1012$$], 1, ""}, 1, 2, 1}}, Typeset`size$$ = 
+    Automatic, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`i1012$215233$$ = 0}, 
+    PaneBox[
+     PanelBox[
+      DynamicWrapperBox[GridBox[{
+         {
+          ItemBox[
+           ItemBox[
+            TagBox[
+             StyleBox[GridBox[{
+                {"\<\"\"\>", 
+                 AnimatorBox[Dynamic[$CellContext`i1012$$], {1, 2, 1},
+                  AnimationRate->Automatic,
+                  AnimationRunTime->20.43000030517578,
+                  AnimationTimeIndex->0.7600002288818359,
+                  
+                  AppearanceElements->{
+                   "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons",
+                     "DirectionButton"},
+                  AutoAction->False,
+                  DisplayAllSteps->True]}
+               },
+               AutoDelete->False,
+               
+               GridBoxAlignment->{
+                "Columns" -> {Right, {Left}}, "ColumnsIndexed" -> {}, 
+                 "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+               
+               GridBoxItemSize->{
+                "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+              "ListAnimateLabel",
+              StripOnInput->False],
+             {"ControlArea", Top}],
+            Alignment->{Automatic, Inherited},
+            StripOnInput->False],
+           Background->None,
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            StyleBox[
+             PaneBox[
+              TagBox[
+               PaneSelectorBox[{1->
+                GraphicsBox[{{{}, {{}, 
+                    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.02], 
+                    AbsoluteThickness[1.6], 
+                    PointBox[{{-17., 0.004719099392204873}, {-16., 
+                    0.006466822499100085}, {-15., 
+                    0.008861816579652054}, {-14., 
+                    0.012143799076335308`}, {-13., 
+                    0.01664126702249942}, {-12., 0.0228043766512726}, {-11., 
+                    0.03125000000000001}, {-10., 0.04282346827250387}, {-9., 
+                    0.05868318191635665}, {-8., 0.0804165561255895}, {-7., 
+                    0.11019890687450265`}, {-6., 0.15101118055055593`}, {-5., 
+                    0.2069383199712027}, {-4., 0.28357813054886566`}, {-3., 
+                    0.38860157044272986`}, {-2., 0.5325205447199813}, {-1., 
+                    0.7297400528407231}, {0., 1.}}]}, {}}, {}}, InsetBox[
+                   
+                   InterpretationBox["\<\"Function            = \
+\\!\\(\\*FormBox[RowBox[{\\\"x$\\\", \\\"\[Function]\\\", \
+SuperscriptBox[\\\"x$\\\", \\\"0.45454545454545453`\\\"]}], \
+TraditionalForm]\\)\"\>",
+                    StringForm["Function            = `1`", 
+                    
+                    Function[$CellContext`x$, \
+$CellContext`x$^0.45454545454545453`]],
+                    Editable->False], {-20, 0.6}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Min value         = \
+\\!\\(\\*FormBox[RowBox[{\\\"-\\\", \\\"17.6`\\\"}], TraditionalForm]\\)\"\>",
+                    StringForm["Min value         = `1`", -17.6],
+                    Editable->False], {-20, 0.5}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Max value         = \
+\\!\\(\\*FormBox[\\\"0.`\\\", TraditionalForm]\\)\"\>",
+                    StringForm["Max value         = `1`", 0.],
+                    Editable->False], {-20, 0.4}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Dynamic range = \\!\\(\\*FormBox[\\\
+\"17.6`\\\", TraditionalForm]\\)\"\>",
+                    StringForm["Dynamic range = `1`", 17.6],
+                    Editable->False], {-20, 0.3}, {-1, 0}], 
+                  {RGBColor[1, 0, 0], Thickness[0.005], 
+                   Arrowheads[{-0.03, 0.03}], 
+                   ArrowBox[
+                    NCache[{{Rational[-88, 5], -0.05}, {
+                    0, -0.05}}, {{-17.6, -0.05}, {0, -0.05}}]]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-17, -0.01}, {-17, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-16, -0.01}, {-16, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-15, -0.01}, {-15, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-14, -0.01}, {-14, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-13, -0.01}, {-13, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-12, -0.01}, {-12, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-11, -0.01}, {-11, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-10, -0.01}, {-10, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-9, -0.01}, {-9, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-8, -0.01}, {-8, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-7, -0.01}, {-7, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-6, -0.01}, {-6, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-5, -0.01}, {-5, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-4, -0.01}, {-4, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-3, -0.01}, {-3, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-2, -0.01}, {-2, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-1, -0.01}, {-1, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{0, -0.01}, {0, 0.03}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.004719099392204873}, {0.22, 
+                    0.004719099392204873}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.006466822499100085}, {0.22, 
+                    0.006466822499100085}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.008861816579652054}, {0.22, 
+                    0.008861816579652054}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.012143799076335308`}, {0.22, 
+                    0.012143799076335308`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.01664126702249942}, {0.22, 
+                    0.01664126702249942}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.0228043766512726}, {0.22, 
+                    0.0228043766512726}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.03125000000000001}, {0.22, 
+                    0.03125000000000001}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.04282346827250387}, {0.22, 
+                    0.04282346827250387}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.05868318191635665}, {0.22, 
+                    0.05868318191635665}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.0804165561255895}, {0.22, 
+                    0.0804165561255895}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.11019890687450265`}, {0.22, 
+                    0.11019890687450265`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.15101118055055593`}, {0.22, 
+                    0.15101118055055593`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.2069383199712027}, {0.22, 
+                    0.2069383199712027}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.28357813054886566`}, {0.22, 
+                    0.28357813054886566`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.38860157044272986`}, {0.22, 
+                    0.38860157044272986`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.5325205447199813}, {0.22, 
+                    0.5325205447199813}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.7297400528407231}, {0.22, 
+                    0.7297400528407231}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 1.}, {0.22, 1.}}]}},
+                 AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+                 Axes->{True, True},
+                 AxesLabel->{None, None},
+                 AxesOrigin->{0, 0},
+                 DisplayFunction->Identity,
+                 Frame->{{False, False}, {False, False}},
+                 FrameLabel->{{None, None}, {None, None}},
+                 FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+                 GridLines->{None, None},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 ImageSize->600,
+                 Method->{},
+                 PlotRange->{{-20, 2}, {-0.1, 1.1}},
+                 PlotRangeClipping->True,
+                 PlotRangePadding->{{0, 0}, {0, 0}},
+                 Ticks->{Automatic, Automatic}], 2->
+                GraphicsBox[{{{}, {{}, 
+                    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.02], 
+                    AbsoluteThickness[1.6], PointBox[CompressedData["
+1:eJxTTMoPSmViYGAQAWIQDQHGB5Iqb07q/1xgD+EbHThtXZ82b0EZlG94wElY
+4Lm5SR2Ub3Cgq6j35yKNFihf78Cay1Ez57/ogvJ1Duy/dvzwrK8ToXytA+vP
+Z1wX+Dkdytc48B8M5kP5agdi33zgaIxeCuWrHNA46Mdu17QGylc6ILrdkOsf
+22YoX+GATZ7t0n+pO6F8Gaj7D0D5EgfOgN1/DMoXOeAMdv85KF/gQDfY/Veg
+fI4Da8HuvwXlMxw4AHb/Qyj/w/4NYPc/h8lDwQd7AIyHZsI=
+                    "]]}, {}}, {}}, InsetBox[
+                   
+                   InterpretationBox["\<\"Function            = \
+\\!\\(\\*FormBox[RowBox[{\\\"x$\\\", \\\"\[Function]\\\", \
+SuperscriptBox[\\\"x$\\\", \\\"0.4166666666666667`\\\"]}], \
+TraditionalForm]\\)\"\>",
+                    StringForm["Function            = `1`", 
+                    
+                    Function[$CellContext`x$, \
+$CellContext`x$^0.4166666666666667]],
+                    Editable->False], {-20, 0.6}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Min value         = \
+\\!\\(\\*FormBox[RowBox[{\\\"-\\\", \\\"19.2`\\\"}], TraditionalForm]\\)\"\>",
+                    StringForm["Min value         = `1`", -19.2],
+                    Editable->False], {-20, 0.5}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Max value         = \
+\\!\\(\\*FormBox[\\\"0.`\\\", TraditionalForm]\\)\"\>",
+                    StringForm["Max value         = `1`", 0.],
+                    Editable->False], {-20, 0.4}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Dynamic range = \\!\\(\\*FormBox[\\\
+\"19.2`\\\", TraditionalForm]\\)\"\>",
+                    StringForm["Dynamic range = `1`", 19.2],
+                    Editable->False], {-20, 0.3}, {-1, 0}], 
+                  {RGBColor[1, 0, 0], Thickness[0.005], 
+                   Arrowheads[{-0.03, 0.03}], 
+                   ArrowBox[
+                    NCache[{{Rational[-96, 5], -0.05}, {
+                    0, -0.05}}, {{-19.2, -0.05}, {0, -0.05}}]]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-19, -0.01}, {-19, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-18, -0.01}, {-18, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-17, -0.01}, {-17, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-16, -0.01}, {-16, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-15, -0.01}, {-15, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-14, -0.01}, {-14, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-13, -0.01}, {-13, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-12, -0.01}, {-12, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-11, -0.01}, {-11, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-10, -0.01}, {-10, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-9, -0.01}, {-9, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-8, -0.01}, {-8, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-7, -0.01}, {-7, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-6, -0.01}, {-6, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-5, -0.01}, {-5, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-4, -0.01}, {-4, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-3, -0.01}, {-3, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-2, -0.01}, {-2, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-1, -0.01}, {-1, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{0, -0.01}, {0, 0.03}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.0041385277123409964`}, {0.22, 
+                    0.0041385277123409964`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.005524271728019901}, {0.22, 
+                    0.005524271728019901}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.007374018067825729}, {0.22, 
+                    0.007374018067825729}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.009843133202303695}, {0.22, 
+                    0.009843133202303695}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.013139006488339287`}, {0.22, 
+                    0.013139006488339287`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.01753846950483395}, {0.22, 
+                    0.01753846950483395}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.023411048076198145`}, {0.22, 
+                    0.023411048076198145`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.031249999999999997`}, {0.22, 
+                    0.031249999999999997`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.04171374544281357}, {0.22, 
+                    0.04171374544281357}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.0556811698837712}, {0.22, 
+                    0.0556811698837712}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.07432544468767006}, {0.22, 
+                    0.07432544468767006}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.09921256574801246}, {0.22, 
+                    0.09921256574801246}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.13243288679491189`}, {0.22, 
+                    0.13243288679491189`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.17677669529663687`}, {0.22, 
+                    0.17677669529663687`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.23596857817042335`}, {0.22, 
+                    0.23596857817042335`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.3149802624737183}, {0.22, 
+                    0.3149802624737183}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.42044820762685725`}, {0.22, 
+                    0.42044820762685725`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.5612310241546865}, {0.22, 
+                    0.5612310241546865}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.7491535384383408}, {0.22, 
+                    0.7491535384383408}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 1.}, {0.22, 1.}}]}},
+                 AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+                 Axes->{True, True},
+                 AxesLabel->{None, None},
+                 AxesOrigin->{0, 0},
+                 DisplayFunction->Identity,
+                 Frame->{{False, False}, {False, False}},
+                 FrameLabel->{{None, None}, {None, None}},
+                 FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+                 GridLines->{None, None},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 ImageSize->600,
+                 Method->{},
+                 PlotRange->{{-20, 2}, {-0.1, 1.1}},
+                 PlotRangeClipping->True,
+                 PlotRangePadding->{{0, 0}, {0, 0}},
+                 Ticks->{Automatic, Automatic}]}, 
+                Dynamic[$CellContext`i1012$$],
+                Alignment->Automatic,
+                ImageSize->All,
+                TransitionDirection->Horizontal,
+                TransitionDuration->0.5,
+                TransitionEffect->Automatic],
+               Identity,
+               Editable->True,
+               Selectable->True],
+              ImageMargins->10],
+             Deployed->False,
+             StripOnInput->False,
+             ScriptLevel->0,
+             GraphicsBoxOptions->{PreserveImageOptions->True},
+             Graphics3DBoxOptions->{PreserveImageOptions->True}],
+            Identity,
+            Editable->False,
+            Selectable->False],
+           Alignment->{Left, Center},
+           Background->GrayLevel[1],
+           Frame->1,
+           FrameStyle->GrayLevel[0, 0.2],
+           ItemSize->Automatic,
+           StripOnInput->False]}
+        },
+        AutoDelete->False,
+        GridBoxAlignment->{
+         "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Top}}, 
+          "RowsIndexed" -> {}},
+        GridBoxDividers->{
+         "Columns" -> {{False}}, "ColumnsIndexed" -> {}, "Rows" -> {{False}}, 
+          "RowsIndexed" -> {}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.7], {
+             Offset[0.5599999999999999]}, 
+            Offset[0.7]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.4], {
+             Offset[0.8]}, 
+            Offset[0.4]}, "RowsIndexed" -> {}}], If[
+        And[
+         CurrentValue["NotebookSelected"], 
+         CurrentValue["SelectionOver"]], 
+        Manipulate`Dump`ReadControllerState[
+         Map[Manipulate`Dump`updateOneVar[#, 
+           CurrentValue["PreviousFormatTime"], 
+           CurrentValue["CurrentFormatTime"]]& , {
+           
+           Manipulate`Dump`controllerLink[{$CellContext`i1012$$, \
+$CellContext`i1012$215233$$}, "X1", 
+            If["DefaultAbsolute", True, "JB1"], False, {1, 2, 1}, 2, 1.]}], 
+         CurrentValue[{
+          "ControllerData", {
+           "Gamepad", "Joystick", "Multi-Axis Controller"}}], {}]],
+       ImageSizeCache->{633., {208.75, 215.75}}],
+      DefaultBaseStyle->{},
+      FrameMargins->{{5, 5}, {5, 5}}],
+     BaselinePosition->Automatic,
+     ImageMargins->0],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "ListAnimate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.681678780347704*^9, 3.681678918271495*^9, 
+  3.6816796262535896`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Save", " ", "it", " ", "to", " ", "a", " ", "gif", " ", "file"}], 
+   " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{"\"\<gamma_2_2vs2_4.gif\>\"", ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{"Function", "[", 
+         RowBox[{"y", ",", 
+          RowBox[{"Show", "[", 
+           RowBox[{"plotDynamicRange", "[", 
+            RowBox[{
+             RowBox[{"Function", "[", 
+              RowBox[{"x", ",", 
+               RowBox[{"Power", "[", 
+                RowBox[{"x", ",", "y"}], "]"}]}], "]"}], ",", 
+             RowBox[{"1", "/", "256"}], ",", "1", ",", 
+             RowBox[{"-", "20"}], ",", "2"}], "]"}], "]"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"1", "/", "2.2"}], ",", 
+          RowBox[{"1", "/", "2.4"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"\"\<DisplayDurations\>\"", "\[Rule]", "2"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.6816781166261387`*^9, 3.6816781277902546`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Simulate", " ", "poor", " ", "viewing", " ", "conditions", " ", "by", " ",
+     "cutting", " ", "off", " ", "bottom", " ", "25", "%", " ", "of", " ", 
+    "encoding", " ", "range"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Show", "[", 
+    RowBox[{"plotDynamicRange", "[", 
+     RowBox[{
+      RowBox[{"Function", "[", 
+       RowBox[{"x", ",", 
+        RowBox[{"Power", "[", 
+         RowBox[{"x", ",", 
+          RowBox[{"1", "/", "2.2"}]}], "]"}]}], "]"}], ",", 
+      RowBox[{"64", "/", "256"}], ",", "1", ",", 
+      RowBox[{"-", "20"}], ",", "2"}], "]"}], "]"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.681678140354511*^9, 3.6816781692483997`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {{}, 
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.02], 
+      AbsoluteThickness[1.6], 
+      PointBox[{{-4., 0.28357813054886566`}, {-3., 
+       0.38860157044272986`}, {-2., 0.5325205447199813}, {-1., 
+       0.7297400528407231}, {0., 1.}}]}, {}}, {}}, InsetBox[
+    InterpretationBox["\<\"Function            = \
+\\!\\(\\*FormBox[RowBox[{\\\"x\\\", \\\"\[Function]\\\", SuperscriptBox[\\\"x\
+\\\", RowBox[{\\\"1\\\", \\\"/\\\", \\\"2.2`\\\"}]]}], \
+TraditionalForm]\\)\"\>",
+     StringForm["Function            = `1`", 
+      Function[$CellContext`x, $CellContext`x^(1/2.2)]],
+     Editable->False], {-20, 0.6}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Min value         = \\!\\(\\*FormBox[RowBox[{\\\"-\
+\\\", \\\"4.4`\\\"}], TraditionalForm]\\)\"\>",
+     StringForm["Min value         = `1`", -4.4],
+     Editable->False], {-20, 0.5}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Max value         = \\!\\(\\*FormBox[\\\"0.`\\\", \
+TraditionalForm]\\)\"\>",
+     StringForm["Max value         = `1`", 0.],
+     Editable->False], {-20, 0.4}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Dynamic range = \\!\\(\\*FormBox[\\\"4.4`\\\", \
+TraditionalForm]\\)\"\>",
+     StringForm["Dynamic range = `1`", 4.4],
+     Editable->False], {-20, 0.3}, {-1, 0}], 
+   {RGBColor[1, 0, 0], Thickness[0.005], Arrowheads[{-0.03, 0.03}], 
+    ArrowBox[NCache[{{Rational[-22, 5], -0.05}, {0, -0.05}}, {{-4.4, -0.05}, {
+       0, -0.05}}]]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-4, -0.01}, {-4, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-3, -0.01}, {-3, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-2, -0.01}, {-2, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-1, -0.01}, {-1, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{0, -0.01}, {0, 0.03}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.28357813054886566`}, {0.22, 0.28357813054886566`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.38860157044272986`}, {0.22, 0.38860157044272986`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.5325205447199813}, {0.22, 0.5325205447199813}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.7297400528407231}, {0.22, 0.7297400528407231}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], LineBox[{{-0.22, 1.}, {0.22, 1.}}]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImageSize->600,
+  Method->{},
+  PlotRange->{{-20, 2}, {-0.1, 1.1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0, 0}, {0, 0}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.681678780721741*^9, 3.6816789187205396`*^9, 
+  3.6816796266075897`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Now", " ", "the", " ", "same", " ", "with", " ", "some", " ", "extra", 
+    " ", "user", " ", "specified", " ", "gamma", " ", "settings"}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Show", "[", 
+   RowBox[{"plotDynamicRange", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"x", ",", 
+       RowBox[{"Power", "[", 
+        RowBox[{"x", ",", 
+         RowBox[{"0.5", "/", "2.2"}]}], "]"}]}], "]"}], ",", 
+     RowBox[{"64", "/", "256"}], ",", "1", ",", 
+     RowBox[{"-", "20"}], ",", "2"}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6816795550595894`*^9, 3.6816795554835896`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {{}, 
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.02], 
+      AbsoluteThickness[1.6], 
+      PointBox[{{-8., 0.28357813054886566`}, {-7., 0.3319622069972765}, {-6., 
+       0.38860157044272986`}, {-5., 0.4549047372485834}, {-4., 
+       0.5325205447199813}, {-3., 0.6233791546424454}, {-2., 
+       0.7297400528407231}, {-1., 0.8542482384182734}, {0., 1.}}]}, {}}, {}}, 
+   InsetBox[
+    InterpretationBox["\<\"Function            = \
+\\!\\(\\*FormBox[RowBox[{\\\"x\\\", \\\"\[Function]\\\", SuperscriptBox[\\\"x\
+\\\", RowBox[{\\\"0.5`\\\", \\\"/\\\", \\\"2.2`\\\"}]]}], TraditionalForm]\\)\
+\"\>",
+     StringForm["Function            = `1`", 
+      Function[$CellContext`x, $CellContext`x^(0.5/2.2)]],
+     Editable->False], {-20, 0.6}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Min value         = \\!\\(\\*FormBox[RowBox[{\\\"-\
+\\\", \\\"8.8`\\\"}], TraditionalForm]\\)\"\>",
+     StringForm["Min value         = `1`", -8.8],
+     Editable->False], {-20, 0.5}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Max value         = \\!\\(\\*FormBox[\\\"0.`\\\", \
+TraditionalForm]\\)\"\>",
+     StringForm["Max value         = `1`", 0.],
+     Editable->False], {-20, 0.4}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Dynamic range = \\!\\(\\*FormBox[\\\"8.8`\\\", \
+TraditionalForm]\\)\"\>",
+     StringForm["Dynamic range = `1`", 8.8],
+     Editable->False], {-20, 0.3}, {-1, 0}], 
+   {RGBColor[1, 0, 0], Thickness[0.005], Arrowheads[{-0.03, 0.03}], 
+    ArrowBox[NCache[{{Rational[-44, 5], -0.05}, {0, -0.05}}, {{-8.8, -0.05}, {
+       0, -0.05}}]]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-8, -0.01}, {-8, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-7, -0.01}, {-7, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-6, -0.01}, {-6, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-5, -0.01}, {-5, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-4, -0.01}, {-4, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-3, -0.01}, {-3, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-2, -0.01}, {-2, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-1, -0.01}, {-1, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{0, -0.01}, {0, 0.03}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.28357813054886566`}, {0.22, 0.28357813054886566`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.3319622069972765}, {0.22, 0.3319622069972765}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.38860157044272986`}, {0.22, 0.38860157044272986`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.4549047372485834}, {0.22, 0.4549047372485834}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.5325205447199813}, {0.22, 0.5325205447199813}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.6233791546424454}, {0.22, 0.6233791546424454}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.7297400528407231}, {0.22, 0.7297400528407231}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.22, 0.8542482384182734}, {0.22, 0.8542482384182734}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], LineBox[{{-0.22, 1.}, {0.22, 1.}}]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImageSize->600,
+  Method->{},
+  PlotRange->{{-20, 2}, {-0.1, 1.1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0, 0}, {0, 0}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.6816787807747464`*^9, 3.6816789188085485`*^9, 
+  3.6816796266485896`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Compare", " ", "them", " ", "1", " ", "to", " ", "1"}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"ListAnimate", "[", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"y", ",", 
+       RowBox[{"Show", "[", 
+        RowBox[{"plotDynamicRange", "[", 
+         RowBox[{
+          RowBox[{"Function", "[", 
+           RowBox[{"x", ",", 
+            RowBox[{"Power", "[", 
+             RowBox[{"x", ",", "y"}], "]"}]}], "]"}], ",", 
+          RowBox[{"64", "/", "256"}], ",", "1", ",", 
+          RowBox[{"-", "20"}], ",", "2"}], "]"}], "]"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1", "/", "2.2"}], ",", 
+       RowBox[{"0.7", "/", "2.2"}]}], "}"}]}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6816782479535933`*^9, 3.681678259353593*^9}, {
+  3.6816795667465897`*^9, 3.6816795671465893`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`i1013$$ = 2, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {
+    "\"min\"" :> {$CellContext`i1013$$ = 1}, 
+     "\"max\"" :> {$CellContext`i1013$$ = 2}}, Typeset`bookmarkMode$$ = 
+    "Menu", Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`i1013$$], 1, ""}, 1, 2, 1}}, Typeset`size$$ = 
+    Automatic, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`i1013$215816$$ = 0}, 
+    PaneBox[
+     PanelBox[
+      DynamicWrapperBox[GridBox[{
+         {
+          ItemBox[
+           ItemBox[
+            TagBox[
+             StyleBox[GridBox[{
+                {"\<\"\"\>", 
+                 AnimatorBox[Dynamic[$CellContext`i1013$$], {1, 2, 1},
+                  AnimationRate->Automatic,
+                  AnimationRunTime->19.8439998626709,
+                  AnimationTimeIndex->4.572999954223633,
+                  
+                  AppearanceElements->{
+                   "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons",
+                     "DirectionButton"},
+                  AutoAction->False,
+                  DisplayAllSteps->True]}
+               },
+               AutoDelete->False,
+               
+               GridBoxAlignment->{
+                "Columns" -> {Right, {Left}}, "ColumnsIndexed" -> {}, 
+                 "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+               
+               GridBoxItemSize->{
+                "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+              "ListAnimateLabel",
+              StripOnInput->False],
+             {"ControlArea", Top}],
+            Alignment->{Automatic, Inherited},
+            StripOnInput->False],
+           Background->None,
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            StyleBox[
+             PaneBox[
+              TagBox[
+               PaneSelectorBox[{1->
+                GraphicsBox[{{{}, {{}, 
+                    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.02], 
+                    AbsoluteThickness[1.6], 
+                    PointBox[{{-4., 0.28357813054886566`}, {-3., 
+                    0.38860157044272986`}, {-2., 0.5325205447199813}, {-1., 
+                    0.7297400528407231}, {0., 1.}}]}, {}}, {}}, InsetBox[
+                   
+                   InterpretationBox["\<\"Function            = \
+\\!\\(\\*FormBox[RowBox[{\\\"x$\\\", \\\"\[Function]\\\", \
+SuperscriptBox[\\\"x$\\\", \\\"0.45454545454545453`\\\"]}], \
+TraditionalForm]\\)\"\>",
+                    StringForm["Function            = `1`", 
+                    
+                    Function[$CellContext`x$, \
+$CellContext`x$^0.45454545454545453`]],
+                    Editable->False], {-20, 0.6}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Min value         = \
+\\!\\(\\*FormBox[RowBox[{\\\"-\\\", \\\"4.4`\\\"}], TraditionalForm]\\)\"\>",
+                    StringForm["Min value         = `1`", -4.4],
+                    Editable->False], {-20, 0.5}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Max value         = \
+\\!\\(\\*FormBox[\\\"0.`\\\", TraditionalForm]\\)\"\>",
+                    StringForm["Max value         = `1`", 0.],
+                    Editable->False], {-20, 0.4}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Dynamic range = \\!\\(\\*FormBox[\\\
+\"4.4`\\\", TraditionalForm]\\)\"\>",
+                    StringForm["Dynamic range = `1`", 4.4],
+                    Editable->False], {-20, 0.3}, {-1, 0}], 
+                  {RGBColor[1, 0, 0], Thickness[0.005], 
+                   Arrowheads[{-0.03, 0.03}], 
+                   ArrowBox[
+                    NCache[{{Rational[-22, 5], -0.05}, {
+                    0, -0.05}}, {{-4.4, -0.05}, {0, -0.05}}]]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-4, -0.01}, {-4, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-3, -0.01}, {-3, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-2, -0.01}, {-2, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-1, -0.01}, {-1, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{0, -0.01}, {0, 0.03}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.28357813054886566`}, {0.22, 
+                    0.28357813054886566`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.38860157044272986`}, {0.22, 
+                    0.38860157044272986`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.5325205447199813}, {0.22, 
+                    0.5325205447199813}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.7297400528407231}, {0.22, 
+                    0.7297400528407231}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 1.}, {0.22, 1.}}]}},
+                 AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+                 Axes->{True, True},
+                 AxesLabel->{None, None},
+                 AxesOrigin->{0, 0},
+                 DisplayFunction->Identity,
+                 Frame->{{False, False}, {False, False}},
+                 FrameLabel->{{None, None}, {None, None}},
+                 FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+                 GridLines->{None, None},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 ImageSize->600,
+                 Method->{},
+                 PlotRange->{{-20, 2}, {-0.1, 1.1}},
+                 PlotRangeClipping->True,
+                 PlotRangePadding->{{0, 0}, {0, 0}},
+                 Ticks->{Automatic, Automatic}], 2->
+                GraphicsBox[{{{}, {{}, 
+                    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.02], 
+                    AbsoluteThickness[1.6], 
+                    PointBox[{{-6., 0.26626027235999067`}, {-5., 
+                    0.3319622069972765}, {-4., 0.41387663994240537`}, {-3., 
+                    0.5160041398671048}, {-2., 0.6433324490047159}, {-1., 
+                    0.8020800764292277}, {0., 1.}}]}, {}}, {}}, InsetBox[
+                   
+                   InterpretationBox["\<\"Function            = \
+\\!\\(\\*FormBox[RowBox[{\\\"x$\\\", \\\"\[Function]\\\", \
+SuperscriptBox[\\\"x$\\\", \\\"0.3181818181818182`\\\"]}], \
+TraditionalForm]\\)\"\>",
+                    StringForm["Function            = `1`", 
+                    
+                    Function[$CellContext`x$, \
+$CellContext`x$^0.3181818181818182]],
+                    Editable->False], {-20, 0.6}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Min value         = \
+\\!\\(\\*FormBox[RowBox[{\\\"-\\\", \\\"6.285714285714286`\\\"}], \
+TraditionalForm]\\)\"\>",
+                    StringForm["Min value         = `1`", -6.285714285714286],
+                    Editable->False], {-20, 0.5}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Max value         = \
+\\!\\(\\*FormBox[\\\"0.`\\\", TraditionalForm]\\)\"\>",
+                    StringForm["Max value         = `1`", 0.],
+                    Editable->False], {-20, 0.4}, {-1, 0}], InsetBox[
+                   
+                   InterpretationBox["\<\"Dynamic range = \\!\\(\\*FormBox[\\\
+\"6.285714285714286`\\\", TraditionalForm]\\)\"\>",
+                    StringForm["Dynamic range = `1`", 6.285714285714286],
+                    Editable->False], {-20, 0.3}, {-1, 0}], 
+                  {RGBColor[1, 0, 0], Thickness[0.005], 
+                   Arrowheads[{-0.03, 0.03}], 
+                   ArrowBox[
+                    NCache[{{Rational[-44, 7], -0.05}, {
+                    0, -0.05}}, {{-6.285714285714286, -0.05}, {0, -0.05}}]]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-6, -0.01}, {-6, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-5, -0.01}, {-5, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-4, -0.01}, {-4, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-3, -0.01}, {-3, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-2, -0.01}, {-2, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{-1, -0.01}, {-1, 0.03}}]}, 
+                  {RGBColor[0, 1, 0], Thickness[0.005], 
+                   LineBox[{{0, -0.01}, {0, 0.03}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.26626027235999067`}, {0.22, 
+                    0.26626027235999067`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.3319622069972765}, {0.22, 
+                    0.3319622069972765}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.41387663994240537`}, {0.22, 
+                    0.41387663994240537`}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.5160041398671048}, {0.22, 
+                    0.5160041398671048}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.6433324490047159}, {0.22, 
+                    0.6433324490047159}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 0.8020800764292277}, {0.22, 
+                    0.8020800764292277}}]}, 
+                  {RGBColor[0, 0, 1], Thickness[0.005], 
+                   LineBox[{{-0.22, 1.}, {0.22, 1.}}]}},
+                 AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+                 Axes->{True, True},
+                 AxesLabel->{None, None},
+                 AxesOrigin->{0, 0},
+                 DisplayFunction->Identity,
+                 Frame->{{False, False}, {False, False}},
+                 FrameLabel->{{None, None}, {None, None}},
+                 FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+                 GridLines->{None, None},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 ImageSize->600,
+                 Method->{},
+                 PlotRange->{{-20, 2}, {-0.1, 1.1}},
+                 PlotRangeClipping->True,
+                 PlotRangePadding->{{0, 0}, {0, 0}},
+                 Ticks->{Automatic, Automatic}]}, 
+                Dynamic[$CellContext`i1013$$],
+                Alignment->Automatic,
+                ImageSize->All,
+                TransitionDirection->Horizontal,
+                TransitionDuration->0.5,
+                TransitionEffect->Automatic],
+               Identity,
+               Editable->True,
+               Selectable->True],
+              ImageMargins->10],
+             Deployed->False,
+             StripOnInput->False,
+             ScriptLevel->0,
+             GraphicsBoxOptions->{PreserveImageOptions->True},
+             Graphics3DBoxOptions->{PreserveImageOptions->True}],
+            Identity,
+            Editable->False,
+            Selectable->False],
+           Alignment->{Left, Center},
+           Background->GrayLevel[1],
+           Frame->1,
+           FrameStyle->GrayLevel[0, 0.2],
+           ItemSize->Automatic,
+           StripOnInput->False]}
+        },
+        AutoDelete->False,
+        GridBoxAlignment->{
+         "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Top}}, 
+          "RowsIndexed" -> {}},
+        GridBoxDividers->{
+         "Columns" -> {{False}}, "ColumnsIndexed" -> {}, "Rows" -> {{False}}, 
+          "RowsIndexed" -> {}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.7], {
+             Offset[0.5599999999999999]}, 
+            Offset[0.7]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.4], {
+             Offset[0.8]}, 
+            Offset[0.4]}, "RowsIndexed" -> {}}], If[
+        And[
+         CurrentValue["NotebookSelected"], 
+         CurrentValue["SelectionOver"]], 
+        Manipulate`Dump`ReadControllerState[
+         Map[Manipulate`Dump`updateOneVar[#, 
+           CurrentValue["PreviousFormatTime"], 
+           CurrentValue["CurrentFormatTime"]]& , {
+           
+           Manipulate`Dump`controllerLink[{$CellContext`i1013$$, \
+$CellContext`i1013$215816$$}, "X1", 
+            If["DefaultAbsolute", True, "JB1"], False, {1, 2, 1}, 2, 1.]}], 
+         CurrentValue[{
+          "ControllerData", {
+           "Gamepad", "Joystick", "Multi-Axis Controller"}}], {}]],
+       ImageSizeCache->{633., {208.75, 215.75}}],
+      DefaultBaseStyle->{},
+      FrameMargins->{{5, 5}, {5, 5}}],
+     BaselinePosition->Automatic,
+     ImageMargins->0],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "ListAnimate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.6816787808857574`*^9, 3.6816789189495625`*^9, 
+  3.6816796267345896`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"And", " ", "save", " ", "to", " ", "a", " ", "gif", " ", "file"}],
+    " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Export", "[", 
+    RowBox[{"\"\<poor_viewing_conditions.gif\>\"", ",", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{"Function", "[", 
+        RowBox[{"y", ",", 
+         RowBox[{"Show", "[", 
+          RowBox[{"plotDynamicRange", "[", 
+           RowBox[{
+            RowBox[{"Function", "[", 
+             RowBox[{"x", ",", 
+              RowBox[{"Power", "[", 
+               RowBox[{"x", ",", "y"}], "]"}]}], "]"}], ",", 
+            RowBox[{"64", "/", "256"}], ",", "1", ",", 
+            RowBox[{"-", "20"}], ",", "2"}], "]"}], "]"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"1", "/", "2.2"}], ",", 
+         RowBox[{"0.7", "/", "2.2"}]}], "}"}]}], "]"}], ",", 
+     RowBox[{"\"\<DisplayDurations\>\"", "\[Rule]", "2"}]}], "]"}], 
+   ";"}]}]], "Input",
+ CellChangeTimes->{{3.681678230575532*^9, 3.6816782655055933`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Demonstrate", " ", "effect", " ", "of", " ", "Reinhard", " ", "simple", 
+    " ", 
+    RowBox[{"x", "/", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", "x"}], ")"}]}], " ", "operator", " ", "with", " ", 
+    "whitepoint", " ", "of", " ", "128"}], " ", "*)"}], "\[IndentingNewLine]",
+   "\[IndentingNewLine]", 
+  RowBox[{"Show", "[", 
+   RowBox[{"Quiet", "@", 
+    RowBox[{"plotDynamicRange", "[", 
+     RowBox[{
+      RowBox[{"Function", "[", 
+       RowBox[{"x", ",", 
+        RowBox[{"Power", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"x", "/", 
+            RowBox[{"(", 
+             RowBox[{"1", "+", "x"}], ")"}]}], " ", "*", " ", 
+           RowBox[{"(", 
+            RowBox[{"1", "/", 
+             RowBox[{"(", 
+              RowBox[{"128", "/", 
+               RowBox[{"(", 
+                RowBox[{"128", "+", "1"}], ")"}]}], ")"}]}], ")"}]}], ",", 
+          RowBox[{"1", "/", "2.2"}]}], "]"}]}], "]"}], ",", 
+      RowBox[{"1", "/", "256"}], ",", "1", ",", 
+      RowBox[{"-", "20"}], ",", "8"}], "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6816786547121415`*^9, 3.681678684861156*^9}, {
+  3.68167878921059*^9, 3.681678794538123*^9}, {3.6816795760175896`*^9, 
+  3.6816795809535894`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {{}, 
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.02], 
+      AbsoluteThickness[1.6], PointBox[CompressedData["
+1:eJxTTMoPSmViYGCQBGIQDQGGByoeH1a4lVpsD+EbHKi46HHy/ZQqKF/vgJaJ
+j1K3WROUr3Pgcp1ho/XXDihf60BWm+vB+ZIToXyNAxLlosU9edOhfLUDd6Y/
+dp7FuwDKVzlQYecWH/lvKZSvdKBu/balSgrroHyFAxsnrp9XO38LlC9zIGmH
+yN1/pnugfIkDRxQS/v5zOgzlixz4FHjpbpnZKShf4MC2J68SH2y/COVzHDj9
+u3FDyIrrUD7DAb+9Zbwmz+9B+R/2T7Bqv1Zc+xgmz3Dg+p+bZvnPYfL2tjds
+xX23voLJO+R2PTsmxPIWZr6D2vIbD8oL3sHsdxCxqvk32fY9zH0Ol+Z5B19f
+BeNLOJz/pHPb+zGML+MAswcA1Kd6EA==
+       "]]}, {}}, {}}, InsetBox[
+    InterpretationBox["\<\"Function            = \
+\\!\\(\\*FormBox[RowBox[{\\\"x\\\", \\\"\[Function]\\\", \
+SuperscriptBox[RowBox[{\\\"(\\\", FractionBox[\\\"x\\\", \
+FractionBox[RowBox[{RowBox[{\\\"(\\\", RowBox[{\\\"x\\\", \\\"+\\\", \
+\\\"1\\\"}], \\\")\\\"}], \\\" \\\", \\\"128\\\"}], RowBox[{\\\"128\\\", \
+\\\"+\\\", \\\"1\\\"}]]], \\\")\\\"}], RowBox[{\\\"1\\\", \\\"/\\\", \\\"2.2`\
+\\\"}]]}], TraditionalForm]\\)\"\>",
+     StringForm["Function            = `1`", 
+      Function[$CellContext`x, (($CellContext`x/(1 + $CellContext`x)) (1/(
+         128/(128 + 1))))^(1/2.2)]],
+     Editable->False], {-20, 0.6}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Min value         = \\!\\(\\*FormBox[RowBox[{\\\"-\
+\\\", \\\"17.611220049859597`\\\"}], TraditionalForm]\\)\"\>",
+     StringForm["Min value         = `1`", -17.611220049859597`],
+     Editable->False], {-20, 0.5}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Max value         = \
+\\!\\(\\*FormBox[\\\"7.000000000000023`\\\", TraditionalForm]\\)\"\>",
+     StringForm["Max value         = `1`", 7.000000000000023],
+     Editable->False], {-20, 0.4}, {-1, 0}], InsetBox[
+    InterpretationBox["\<\"Dynamic range = \
+\\!\\(\\*FormBox[\\\"24.611220049859618`\\\", TraditionalForm]\\)\"\>",
+     StringForm["Dynamic range = `1`", 24.611220049859618`],
+     Editable->False], {-20, 0.3}, {-1, 0}], 
+   {RGBColor[1, 0, 0], Thickness[0.005], Arrowheads[{-0.03, 0.03}], 
+    ArrowBox[{{-17.611220049859597`, -0.05}, {7.000000000000023, -0.05}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-17, -0.01}, {-17, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-16, -0.01}, {-16, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-15, -0.01}, {-15, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-14, -0.01}, {-14, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-13, -0.01}, {-13, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-12, -0.01}, {-12, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-11, -0.01}, {-11, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], 
+    LineBox[{{-10, -0.01}, {-10, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-9, -0.01}, {-9, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-8, -0.01}, {-8, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-7, -0.01}, {-7, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-6, -0.01}, {-6, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-5, -0.01}, {-5, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-4, -0.01}, {-4, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-3, -0.01}, {-3, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-2, -0.01}, {-2, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{-1, -0.01}, {-1, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{0, -0.01}, {0, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{1, -0.01}, {1, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{2, -0.01}, {2, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{3, -0.01}, {3, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{4, -0.01}, {4, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{5, -0.01}, {5, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{6, -0.01}, {6, 0.03}}]}, 
+   {RGBColor[0, 1, 0], Thickness[0.005], LineBox[{{7, -0.01}, {7, 0.03}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.004735805571038358}, {0.28, 0.004735805571038358}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.006489693322283656}, {0.28, 0.006489693322283656}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.008893095955068448}, {0.28, 0.008893095955068448}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.012186493759315386`}, {0.28, 0.012186493759315386`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.01669931046615717}, {0.28, 0.01669931046615717}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.022882647060547517`}, {0.28, 0.022882647060547517`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.03135377958987792}, {0.28, 0.03135377958987792}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.04295615470902886}, {0.28, 0.04295615470902886}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.05883892319556504}, {0.28, 0.05883892319556504}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.0805586349884553}, {0.28, 0.0805586349884553}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.11019890687450265`}, {0.28, 0.11019890687450265`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.15048205730295738`}, {0.28, 0.15048205730295738`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.20478711920863152`}, {0.28, 0.20478711920863152`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.2768479305482957}, {0.28, 0.2768479305482957}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.3696490977962951}, {0.28, 0.3696490977962951}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.48286153139902843`}, {0.28, 0.48286153139902843`}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.609064024925674}, {0.28, 0.609064024925674}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.7323259599277137}, {0.28, 0.7323259599277137}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.8346314863144993}, {0.28, 0.8346314863144993}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.9067472347999918}, {0.28, 0.9067472347999918}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.9512290374306971}, {0.28, 0.9512290374306971}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.9762668581404932}, {0.28, 0.9762668581404932}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.9896046282637718}, {0.28, 0.9896046282637718}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], 
+    LineBox[{{-0.28, 0.9964961319706961}, {0.28, 0.9964961319706961}}]}, 
+   {RGBColor[0, 0, 1], Thickness[0.005], LineBox[{{-0.28, 1.}, {0.28, 1.}}]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImageSize->600,
+  Method->{},
+  PlotRange->{{-20, 8}, {-0.1, 1.1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0, 0}, {0, 0}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{{3.6816787815688257`*^9, 3.6816787951361823`*^9}, 
+   3.6816789195306206`*^9, 3.6816796271885896`*^9}]
+}, Open  ]]
+},
+WindowSize->{740, 867},
+WindowMargins->{{Automatic, -1246}, {112, Automatic}},
+PrintingCopies->1,
+PrintingPageRange->{32000, 32000},
+PrintingOptions->{"Magnification"->1.,
+"PaperOrientation"->"Portrait",
+"PaperSize"->{611.9999999999999, 792.}},
+FrontEndVersion->"10.3 for Microsoft Windows (64-bit) (December 10, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 383, 10, 52, "Input"],
+Cell[944, 32, 7702, 189, 592, "Input"],
+Cell[CellGroupData[{
+Cell[8671, 225, 580, 15, 52, "Input"],
+Cell[9254, 242, 4108, 79, 379, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13399, 326, 1017, 27, 92, "Input"],
+Cell[14419, 355, 2155, 44, 454, "Output"]
+}, Open  ]],
+Cell[16589, 402, 1110, 30, 92, "Input"],
+Cell[CellGroupData[{
+Cell[17724, 436, 993, 26, 112, "Input"],
+Cell[18720, 464, 2102, 42, 454, "Output"]
+}, Open  ]],
+Cell[20837, 509, 914, 24, 92, "Input"],
+Cell[21754, 535, 810, 21, 72, "Input"],
+Cell[CellGroupData[{
+Cell[22589, 560, 797, 19, 92, "Input"],
+Cell[23389, 581, 3261, 65, 381, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26687, 651, 989, 24, 132, "Input"],
+Cell[27679, 677, 2110, 44, 454, "Output"]
+}, Open  ]],
+Cell[29804, 724, 1168, 29, 152, "Input"],
+Cell[CellGroupData[{
+Cell[30997, 757, 637, 16, 52, "Input"],
+Cell[31637, 775, 6151, 115, 381, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37825, 895, 1022, 25, 152, "Input"],
+Cell[38850, 922, 21719, 428, 456, "Output"]
+}, Open  ]],
+Cell[60584, 1353, 1102, 28, 132, "Input"],
+Cell[CellGroupData[{
+Cell[61711, 1385, 759, 19, 92, "Input"],
+Cell[62473, 1406, 3096, 61, 381, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[65606, 1472, 674, 17, 52, "Input"],
+Cell[66283, 1491, 4003, 75, 381, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[70323, 1571, 922, 24, 132, "Input"],
+Cell[71248, 1597, 13735, 289, 456, "Output"]
+}, Open  ]],
+Cell[84998, 1889, 1056, 27, 112, "Input"],
+Cell[CellGroupData[{
+Cell[86079, 1920, 1284, 34, 152, "Input"],
+Cell[87366, 1956, 7727, 137, 414, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
