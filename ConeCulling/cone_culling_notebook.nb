@@ -1,0 +1,3574 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    142323,       3566]
+NotebookOptionsPosition[    140023,       3490]
+NotebookOutlinePosition[    140370,       3505]
+CellTagsIndexPosition[    140327,       3502]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Set", " ", "the", " ", "folder", " ", "for", " ", "saving", " ", "gifs"}],
+    " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"SetDirectory", "@", 
+     RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Some", " ", "2", "D", " ", "vector", " ", "math", " ", "simple", " ", 
+     "constructs", " ", "helpers"}], "*)"}]}]}]], "Input",
+ CellChangeTimes->{{3.700759168853739*^9, 3.7007592090301275`*^9}, {
+  3.7007656737387085`*^9, 3.7007656752843533`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"rotateVector", "[", "v_", "]"}], ":=", 
+  RowBox[{"Join", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"v", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+      ",", 
+      RowBox[{"-", 
+       RowBox[{
+       "v", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}]}], "}"}],
+     ",", 
+    RowBox[{"Take", "[", 
+     RowBox[{"v", ",", 
+      RowBox[{"{", 
+       RowBox[{"3", ",", 
+        RowBox[{"-", "1"}]}], "}"}]}], "]"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"normalize", "[", "v_", "]"}], ":=", 
+  RowBox[{"Join", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Take", "[", 
+      RowBox[{"v", ",", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "2"}], "}"}]}], "]"}], "/", 
+     RowBox[{"Norm", "[", 
+      RowBox[{"Take", "[", 
+       RowBox[{"v", ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "2"}], "}"}]}], "]"}], "]"}]}], ",", 
+    RowBox[{"Take", "[", 
+     RowBox[{"v", ",", 
+      RowBox[{"{", 
+       RowBox[{"3", ",", 
+        RowBox[{"-", "1"}]}], "}"}]}], "]"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"distanceToPlane", "[", 
+   RowBox[{"v_", ",", "plane_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Join", "[", 
+    RowBox[{"v", ",", 
+     RowBox[{"{", "1", "}"}]}], "]"}], ".", 
+   "plane"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"intersectTwoPlanes", "[", 
+   RowBox[{"p1_", ",", "p2_"}], "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"p1", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "*", 
+        RowBox[{"p2", "[", 
+         RowBox[{"[", "3", "]"}], "]"}]}], "-", 
+       RowBox[{
+        RowBox[{"p1", "[", 
+         RowBox[{"[", "3", "]"}], "]"}], "*", 
+        RowBox[{"p2", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}]}], ")"}], "/", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"p1", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "*", 
+        RowBox[{"p2", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], "-", 
+       RowBox[{
+        RowBox[{"p1", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "*", 
+        RowBox[{"p2", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ")"}]}], ",", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"p1", "[", 
+         RowBox[{"[", "3", "]"}], "]"}], "*", 
+        RowBox[{"p2", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], "-", 
+       RowBox[{
+        RowBox[{"p1", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "*", 
+        RowBox[{"p2", "[", 
+         RowBox[{"[", "3", "]"}], "]"}]}]}], ")"}], "/", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"p1", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "*", 
+        RowBox[{"p2", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], "-", 
+       RowBox[{
+        RowBox[{"p1", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "*", 
+        RowBox[{"p2", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ")"}]}]}], 
+   "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"projectPointOntoPlane", "[", 
+    RowBox[{"plane_", ",", "point_"}], "]"}], ":=", 
+   RowBox[{"point", "-", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Join", "[", 
+       RowBox[{"point", ",", 
+        RowBox[{"{", "1", "}"}]}], "]"}], ".", "plane"}], "*", 
+     RowBox[{"plane", "[", 
+      RowBox[{"[", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "2"}], "}"}], "]"}], "]"}]}]}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Some", " ", 
+    RowBox[{"cone", " ", "/", " ", "2"}], "D", " ", "triangle", " ", "helper",
+     " ", "functions"}], "*)"}]}]}], "Input",
+ CellChangeTimes->{{3.7007592108903165`*^9, 3.7007592700506897`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"coneCenter", "[", "l_", "]"}], ":=", 
+  RowBox[{"l", "[", 
+   RowBox[{"[", "1", "]"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"coneAngle", "[", "l_", "]"}], ":=", 
+  RowBox[{"l", "[", 
+   RowBox[{"[", "2", "]"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"coneRotation", "[", "l_", "]"}], ":=", 
+  RowBox[{"l", "[", 
+   RowBox[{"[", "3", "]"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"coneLength", "[", "l_", "]"}], ":=", 
+  RowBox[{"l", "[", 
+   RowBox[{"[", "4", "]"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rotateVector", "[", "v_", "]"}], ":=", 
+  RowBox[{"Join", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"v", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+      ",", 
+      RowBox[{"-", 
+       RowBox[{
+       "v", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}]}], "}"}],
+     ",", 
+    RowBox[{"Take", "[", 
+     RowBox[{"v", ",", 
+      RowBox[{"{", 
+       RowBox[{"3", ",", 
+        RowBox[{"-", "1"}]}], "}"}]}], "]"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"makeCone", "[", 
+   RowBox[{"center_", ",", "angle_", ",", "rotation_", ",", "length_"}], 
+   "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{"center", ",", " ", "angle", ",", " ", "rotation", ",", "length"}],
+    "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"coneCorner", "[", 
+   RowBox[{"cone_", ",", 
+    RowBox[{"first_:", "True"}]}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"coneCenter", "[", "cone", "]"}], " ", "+", 
+   RowBox[{
+    RowBox[{"coneLength", "[", "cone", "]"}], 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Cos", "[", 
+        RowBox[{"coneAngle", "[", "cone", "]"}], "]"}], " ", ",", 
+       RowBox[{
+        RowBox[{"Sin", "[", 
+         RowBox[{"coneAngle", "[", "cone", "]"}], "]"}], "*", 
+        RowBox[{"If", "[", 
+         RowBox[{"first", ",", "1", ",", 
+          RowBox[{"-", "1"}]}], "]"}]}]}], " ", "}"}], ".", 
+     RowBox[{"RotationMatrix", "[", 
+      RowBox[{"coneRotation", "[", "cone", "]"}], 
+      "]"}]}]}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"coneForward", "[", "cone_", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"Cos", "[", 
+     RowBox[{"coneRotation", "[", "cone", "]"}], "]"}], ",", 
+    RowBox[{"-", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"coneRotation", "[", "cone", "]"}], "]"}]}]}], 
+   "}"}]}]}], "Input",
+ CellChangeTimes->{{3.700768776294221*^9, 3.7007687773100977`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"closestConePlanePoint", "[", 
+    RowBox[{"cone_", ",", "plane_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"corner1", ",", "corner2", ",", "origin"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"corner1", "=", 
+       RowBox[{"coneCorner", "[", "cone", "]"}]}], ";", 
+      RowBox[{"corner2", "=", 
+       RowBox[{"coneCorner", "[", 
+        RowBox[{"cone", ",", "False"}], "]"}]}], ";", 
+      RowBox[{"origin", "=", 
+       RowBox[{"coneCenter", "[", "cone", "]"}]}], ";", 
+      RowBox[{
+       RowBox[{"MinimalBy", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"corner1", ",", "corner2", ",", "origin"}], "}"}], ",", 
+         RowBox[{"Function", "[", 
+          RowBox[{"distanceToPlane", "[", 
+           RowBox[{"#", ",", "plane"}], "]"}], "]"}]}], "]"}], "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}]}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"coneBoundingCircle", "[", "cone_", "]"}], ":=", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"coneAngle", "[", "cone", "]"}], ">", 
+     RowBox[{"\[Pi]", "/", "4"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"coneCenter", "[", "cone", "]"}], "+", 
+       RowBox[{
+        RowBox[{"coneForward", "[", "cone", "]"}], "*", 
+        RowBox[{"Cos", "[", 
+         RowBox[{"coneAngle", "[", "cone", "]"}], "]"}]}]}], ",", 
+      RowBox[{"Sin", "[", 
+       RowBox[{"coneAngle", "[", "cone", "]"}], "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"coneCenter", "[", "cone", "]"}], "+", 
+       RowBox[{
+        RowBox[{"coneForward", "[", "cone", "]"}], "*", 
+        RowBox[{"1", "/", 
+         RowBox[{"(", 
+          RowBox[{"2", 
+           RowBox[{"Cos", "[", 
+            RowBox[{"coneAngle", "[", "cone", "]"}], "]"}]}], ")"}]}]}]}], 
+      ",", 
+      RowBox[{"1", "/", 
+       RowBox[{"(", 
+        RowBox[{"2", 
+         RowBox[{"Cos", "[", 
+          RowBox[{"coneAngle", "[", "cone", "]"}], "]"}]}], ")"}]}]}], 
+     "}"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.700759356229987*^9, 3.70075937605718*^9}, {
+  3.7007604116696453`*^9, 3.7007604314848647`*^9}, {3.700760692473854*^9, 
+  3.700760692836351*^9}, {3.700760762219799*^9, 3.700760762997475*^9}, {
+  3.7007686444624853`*^9, 3.7007687397498655`*^9}, {3.7007688739245696`*^9, 
+  3.7007688778614483`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"mapDistances", "[", 
+   RowBox[{"cone_", ",", "plane_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"corner1", ",", "corner2", ",", "origin"}], "}"}], ",", 
+    RowBox[{
+     RowBox[{"corner1", "=", 
+      RowBox[{"coneCorner", "[", "cone", "]"}]}], ";", 
+     RowBox[{"corner2", "=", 
+      RowBox[{"coneCorner", "[", 
+       RowBox[{"cone", ",", "False"}], "]"}]}], ";", 
+     RowBox[{"origin", "=", 
+      RowBox[{"coneCenter", "[", "cone", "]"}]}], ";", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{"Function", "[", 
+        RowBox[{"distanceToPlane", "[", 
+         RowBox[{"#", ",", "plane"}], "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"corner1", ",", "corner2", ",", "origin"}], "}"}]}], 
+      "]"}]}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7007604386854973`*^9, 3.700760453944426*^9}, {
+   3.70076054891407*^9, 3.700760549557133*^9}, {3.700760623657497*^9, 
+   3.7007606896377907`*^9}, 3.700760787990245*^9}],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"Collision", " ", "detection"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.7007593731458488`*^9, 3.700759374058733*^9}, {
+  3.7007607917958946`*^9, 3.7007608008885927`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"boundingBox", "[", "points_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"bb", "=", 
+      RowBox[{"CoordinateBoundingBox", "[", "points", "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"bb", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "1"}], "]"}], "]"}], "+", 
+           RowBox[{"bb", "[", 
+            RowBox[{"[", 
+             RowBox[{"2", ",", "1"}], "]"}], "]"}]}], ")"}], "*", "0.5"}], 
+        ",", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"bb", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "2"}], "]"}], "]"}], "+", 
+           RowBox[{"bb", "[", 
+            RowBox[{"[", 
+             RowBox[{"2", ",", "2"}], "]"}], "]"}]}], ")"}], "*", "0.5"}]}], 
+       "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"bb", "[", 
+            RowBox[{"[", 
+             RowBox[{"2", ",", "1"}], "]"}], "]"}], "-", 
+           RowBox[{"bb", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ")"}], "*", "0.5"}], 
+        ",", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"bb", "[", 
+            RowBox[{"[", 
+             RowBox[{"2", ",", "2"}], "]"}], "]"}], "-", 
+           RowBox[{"bb", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "2"}], "]"}], "]"}]}], ")"}], "*", "0.5"}]}], 
+       "}"}]}], "}"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"testSphereVsPlane", "[", 
+   RowBox[{"sphere_", ",", "plane_"}], "]"}], ":=", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"distanceToPlane", "[", 
+      RowBox[{
+       RowBox[{"sphere", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], ",", "plane"}], "]"}], "<", 
+     RowBox[{"sphere", "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}], ",", "True", ",", "False"}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"sphereVsBoundingBox", "[", 
+   RowBox[{"sphere_", ",", "bb_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Norm", "[", 
+    RowBox[{
+     RowBox[{"Abs", "[", 
+      RowBox[{
+       RowBox[{"sphere", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "-", 
+       RowBox[{"bb", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "-", 
+     RowBox[{"bb", "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}], "]"}], " ", "<", " ", 
+   RowBox[{"sphere", "[", 
+    RowBox[{"[", "2", "]"}], "]"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"testConeVsPlane", "[", 
+   RowBox[{"cone_", ",", "plane_"}], "]"}], ":=", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"distanceToPlane", "[", 
+      RowBox[{
+       RowBox[{"closestConePlanePoint", "[", 
+        RowBox[{"cone", ",", "plane"}], "]"}], ",", "plane"}], "]"}], "<", 
+     "0"}], ",", "True", ",", "False"}], "]"}]}]}], "Input",
+ CellChangeTimes->{
+  3.7007607808608155`*^9, {3.7007608532335663`*^9, 3.700760890750295*^9}, 
+   3.701045950093054*^9, 3.7010468079746914`*^9}],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"Some", " ", "2", "D", " ", "visualizations"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.7007593199809427`*^9, 3.7007593300424757`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"planeGraphics", "[", "v_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"vNorm", ",", "pointOnPlane"}], "}"}], ",", 
+    RowBox[{
+     RowBox[{"vNorm", "=", 
+      RowBox[{
+       RowBox[{"normalize", "[", "v", "]"}], "[", 
+       RowBox[{"[", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "2"}], "}"}], "]"}], "]"}]}], ";", 
+     RowBox[{"pointOnPlane", "=", 
+      RowBox[{"vNorm", "*", 
+       RowBox[{"-", 
+        RowBox[{"v", "[", 
+         RowBox[{"[", "3", "]"}], "]"}]}]}]}], ";", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Opacity", "[", "0.1", "]"}], ",", 
+       RowBox[{"HalfPlane", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"pointOnPlane", "+", 
+            RowBox[{"rotateVector", "[", "vNorm", "]"}]}], ",", 
+           RowBox[{"pointOnPlane", "-", 
+            RowBox[{"rotateVector", "[", "vNorm", "]"}]}]}], "}"}], ",", 
+         "vNorm"}], "]"}]}], "}"}]}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"coneGraphics", "[", "cone_", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"Line", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"coneCenter", "[", "cone", "]"}], ",", 
+       RowBox[{"coneCorner", "[", "cone", "]"}]}], "}"}], "]"}], ",", 
+    RowBox[{"Line", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"coneCenter", "[", "cone", "]"}], ",", 
+       RowBox[{"coneCorner", "[", 
+        RowBox[{"cone", ",", "False"}], "]"}]}], "}"}], "]"}], ",", 
+    RowBox[{"Line", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"coneCorner", "[", 
+        RowBox[{"cone", ",", "False"}], "]"}], ",", 
+       RowBox[{"coneCorner", "[", 
+        RowBox[{"cone", ",", "True"}], "]"}]}], "}"}], "]"}]}], 
+   "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"circleGraphics", "[", "sphere_", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{"Circle", "[", 
+    RowBox[{
+     RowBox[{"sphere", "[", 
+      RowBox[{"[", "1", "]"}], "]"}], ",", 
+     RowBox[{"sphere", "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"boundingBoxGraphics", "[", "bb_", "]"}], ":=", 
+   RowBox[{"Rectangle", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"bb", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], "-", 
+      RowBox[{"bb", "[", 
+       RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+     RowBox[{
+      RowBox[{"bb", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], "+", 
+      RowBox[{"bb", "[", 
+       RowBox[{"[", "2", "]"}], "]"}]}]}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"First", " ", "technique"}], " ", "-", " ", 
+    RowBox[{"cone", " ", "bounding", " ", "sphere"}]}], " ", 
+   "*)"}]}]}], "Input",
+ CellChangeTimes->{{3.7007609687900248`*^9, 3.7007609883888416`*^9}, {
+  3.70076573654316*^9, 3.700765747394516*^9}, {3.7007673525273657`*^9, 
+  3.700767386036036*^9}, {3.700772209014732*^9, 3.7007722096678925`*^9}, {
+  3.7007724631734405`*^9, 3.700772463839631*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"boundingSphere", "=", 
+       RowBox[{"coneBoundingCircle", "[", 
+        RowBox[{"makeCone", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0"}], "}"}], ",", "alpha", ",", "0", ",", "1"}],
+          "]"}], "]"}]}], "}"}], ",", 
+     RowBox[{"Graphics", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"Gray", ",", 
+         RowBox[{"coneGraphics", "[", 
+          RowBox[{"makeCone", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "0"}], "}"}], ",", "alpha", ",", "0", ",", 
+            "1"}], "]"}], "]"}], ",", "Red", ",", 
+         RowBox[{"Circle", "[", 
+          RowBox[{
+           RowBox[{"boundingSphere", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"boundingSphere", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], "}"}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "1.6"}], "+", 
+             RowBox[{"boundingSphere", "[", 
+              RowBox[{"[", 
+               RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ",", 
+            RowBox[{"1.6", "+", 
+             RowBox[{"boundingSphere", "[", 
+              RowBox[{"[", 
+               RowBox[{"1", ",", "1"}], "]"}], "]"}]}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}]}]}], "]"}]}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"alpha", ",", "0", ",", 
+     RowBox[{"\[Pi]", "/", "2"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.7007608881076455`*^9, 3.700765723952572*^9, {3.7010456577952538`*^9, 
+   3.7010456753167777`*^9}, {3.7010457678733826`*^9, 
+   3.7010457782349553`*^9}, {3.7010458182351694`*^9, 3.7010458565001907`*^9}, 
+   3.701045898559188*^9}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`alpha$$ = 0.6120968336888793, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`alpha$$], 0, Rational[1, 2] Pi}}, Typeset`size$$ = {
+    360., {109., 116.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`alpha$41803$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`alpha$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`alpha$$, $CellContext`alpha$41803$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`boundingSphere$ = $CellContext`coneBoundingCircle[
+           $CellContext`makeCone[{0, 0}, $CellContext`alpha$$, 0, 1]]}, 
+        Graphics[{Gray, 
+          $CellContext`coneGraphics[
+           $CellContext`makeCone[{0, 0}, $CellContext`alpha$$, 0, 1]], Red, 
+          Circle[
+           Part[$CellContext`boundingSphere$, 1], 
+           Part[$CellContext`boundingSphere$, 2]]}, 
+         PlotRange -> {{-1.6 + Part[$CellContext`boundingSphere$, 1, 1], 1.6 + 
+            Part[$CellContext`boundingSphere$, 1, 1]}, {-1, 1}}]], 
+      "Specifications" :> {{$CellContext`alpha$$, 0, Rational[1, 2] Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {148., 155.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.7007657247240868`*^9, {3.701045640735962*^9, 3.701045675758704*^9}, 
+   3.7010458568471346`*^9, 3.7010458989950686`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Cone", " ", "bounding", " ", "sphere", " ", "vs", " ", "plane"}], 
+   " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Animate", "[", 
+   RowBox[{
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "testCone", ",", "testPlane", ",", "testCircle", ",", "testColor"}], 
+       "}"}], ",", 
+      RowBox[{
+       RowBox[{"testCone", " ", "=", " ", 
+        RowBox[{"makeCone", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0.7", ",", "1.2"}], "}"}], ",", "angle1", ",", 
+          RowBox[{"\[Pi]", "/", "4"}], ",", "1"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"testPlane", "=", 
+        RowBox[{"normalize", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Cos", "[", "0", "]"}], ",", 
+           RowBox[{"Sin", "[", "0", "]"}], ",", 
+           RowBox[{"-", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Cos", "[", "0", "]"}], ",", 
+               RowBox[{"Sin", "[", "0", "]"}]}], "}"}], ".", 
+             RowBox[{"{", 
+              RowBox[{"0.3", ",", "0.5"}], "}"}]}]}]}], "}"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"testCircle", "=", 
+        RowBox[{"coneBoundingCircle", "[", "testCone", "]"}]}], ";", 
+       RowBox[{"testColor", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"testSphereVsPlane", "[", 
+           RowBox[{"testCircle", ",", "testPlane"}], "]"}], ",", "Red", ",", 
+          "Green"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"testColor", ",", 
+            RowBox[{"planeGraphics", "[", "testPlane", "]"}]}], "}"}], "]"}], 
+         ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"circleGraphics", "[", "testCircle", "]"}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"coneGraphics", "[", "testCone", "]"}], "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"Black", ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+          "]"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}],
+      "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"angle1", ",", "0", ",", 
+      RowBox[{"\[Pi]", "/", "2"}]}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7007709268339047`*^9, 3.700770962126011*^9}, {
+  3.701045987011205*^9, 3.701045996879347*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle1$$ = 1.2958605307342814`, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle1$$], 0, Rational[1, 2] Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle1$45376$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle1$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle1$$, $CellContext`angle1$45376$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`testPlane$, \
+$CellContext`testCircle$, $CellContext`testColor$}, $CellContext`testCone$ = \
+$CellContext`makeCone[{0.7, 1.2}, $CellContext`angle1$$, Pi/4, 
+           1]; $CellContext`testPlane$ = $CellContext`normalize[{
+            Cos[0], 
+            Sin[0], -Dot[{
+               Cos[0], 
+               Sin[0]}, {0.3, 
+              0.5}]}]; $CellContext`testCircle$ = \
+$CellContext`coneBoundingCircle[$CellContext`testCone$]; \
+$CellContext`testColor$ = If[
+           $CellContext`testSphereVsPlane[$CellContext`testCircle$, \
+$CellContext`testPlane$], Red, Green]; Show[
+          Graphics[{$CellContext`testColor$, 
+            $CellContext`planeGraphics[$CellContext`testPlane$]}], 
+          Graphics[
+           $CellContext`circleGraphics[$CellContext`testCircle$]], 
+          Graphics[
+           $CellContext`coneGraphics[$CellContext`testCone$]], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle1$$, 0, Rational[1, 2] Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.700770950467945*^9, 3.7010456408612947`*^9, {3.701045987592248*^9, 
+   3.7010459971874638`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "Cone", " ", "bounding", " ", "sphere", " ", "vs", " ", "frustum", " ", 
+    "and", " ", "few", " ", "planes"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Animate", "[", 
+   RowBox[{
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"testCone", ",", "angles", ",", "testCircle", ",", "planes"}], 
+       "}"}], ",", 
+      RowBox[{
+       RowBox[{"testCone", " ", "=", " ", 
+        RowBox[{"makeCone", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Cos", "[", "0", "]"}], ",", 
+               RowBox[{"Sin", "[", "0", "]"}]}], "}"}]}], "*", "0.5"}], "+", 
+           RowBox[{"{", 
+            RowBox[{"0.8", ",", "1.0"}], "}"}]}], ",", 
+          RowBox[{"\[Pi]", "/", "20"}], ",", "0", ",", "1.0"}], "]"}]}], ";", 
+       RowBox[{"angles", "=", 
+        RowBox[{"{", 
+         RowBox[{"angle2", ",", 
+          RowBox[{"angle2", "+", 
+           RowBox[{
+            RowBox[{"\[Pi]", "/", "2"}], "*", "0.7"}]}], ",", 
+          RowBox[{"angle2", "+", 
+           RowBox[{"\[Pi]", "*", "0.9"}]}], ",", 
+          RowBox[{"angle2", "+", 
+           RowBox[{"\[Pi]", "*", 
+            RowBox[{"3", "/", "2"}]}]}]}], "}"}]}], ";", 
+       RowBox[{"testCircle", "=", 
+        RowBox[{"coneBoundingCircle", "[", "testCone", "]"}]}], ";", 
+       RowBox[{"planes", "=", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{"Function", "[", 
+           RowBox[{"normalize", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Cos", "[", "#", "]"}], ",", 
+              RowBox[{"Sin", "[", "#", "]"}], ",", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"Cos", "[", "#", "]"}], ",", 
+                   RowBox[{"Sin", "[", "#", "]"}]}], "}"}], ".", 
+                 RowBox[{"{", 
+                  RowBox[{"0.45", ",", "0.45"}], "}"}]}]}], "-", "0.05"}]}], 
+             "}"}], "]"}], "]"}], ",", "angles"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{"Function", "[", 
+            RowBox[{"Graphics", "[", 
+             RowBox[{"{", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"intersectTwoPlanes", "[", 
+                  RowBox[{
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+                 RowBox[{"intersectTwoPlanes", "[", 
+                  RowBox[{
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], ",", 
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}]}], "]"}]}], "}"}], "]"}], 
+              "}"}], "]"}], "]"}], ",", 
+           RowBox[{"Partition", "[", 
+            RowBox[{"planes", ",", "3", ",", "1", ",", "1"}], "]"}]}], "]"}], 
+         ",", 
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{"Function", "[", 
+            RowBox[{"Graphics", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{"testSphereVsPlane", "[", 
+                  RowBox[{"testCircle", ",", "#"}], "]"}], ",", "Red", ",", 
+                 "Green"}], "]"}], ",", 
+               RowBox[{"planeGraphics", "[", "#", "]"}]}], "}"}], "]"}], 
+            "]"}], ",", "planes"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"coneGraphics", "[", "testCone", "]"}], "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"circleGraphics", "[", "testCircle", "]"}], "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"Black", ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+          "]"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}],
+      "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"angle2", ",", "0", ",", 
+      RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7007718517921033`*^9, 3.7007718674023476`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle2$$ = 3.8136949507882267`, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle2$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle2$3578$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle2$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle2$$, $CellContext`angle2$3578$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`angles$, \
+$CellContext`testCircle$, $CellContext`planes$}, $CellContext`testCone$ = \
+$CellContext`makeCone[(-{
+               Cos[0], 
+               Sin[0]}) 0.5 + {0.8, 1.}, Pi/20, 0, 
+           1.]; $CellContext`angles$ = {$CellContext`angle2$$, \
+$CellContext`angle2$$ + (Pi/2) 0.7, $CellContext`angle2$$ + 
+           Pi 0.9, $CellContext`angle2$$ + 
+           Pi (3/2)}; $CellContext`testCircle$ = \
+$CellContext`coneBoundingCircle[$CellContext`testCone$]; $CellContext`planes$ = 
+         Map[$CellContext`normalize[{
+             Cos[#], 
+             Sin[#], -Dot[{
+                 Cos[#], 
+                 Sin[#]}, {0.45, 0.45}] - 0.05}]& , $CellContext`angles$]; 
+        Show[
+          Map[Graphics[{
+             Line[{
+               $CellContext`intersectTwoPlanes[
+                Part[#, 1], 
+                Part[#, 2]], 
+               $CellContext`intersectTwoPlanes[
+                Part[#, 2], 
+                Part[#, 3]]}]}]& , 
+           Partition[$CellContext`planes$, 3, 1, 1]], 
+          Map[Graphics[{
+             If[
+              $CellContext`testSphereVsPlane[$CellContext`testCircle$, #], 
+              Red, Green], 
+             $CellContext`planeGraphics[#]}]& , $CellContext`planes$], 
+          Graphics[
+           $CellContext`coneGraphics[$CellContext`testCone$]], 
+          Graphics[
+           $CellContext`circleGraphics[$CellContext`testCircle$]], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle2$$, 0, 2 Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.700771869356848*^9, 3.701045640933487*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+  "Frustum", " ", "bounding", " ", "box", " ", "vs", " ", "bounding", " ", 
+   "sphere"}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.700772469015167*^9, 3.700772478043209*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "testCone", ",", "angles", ",", "testCircle", ",", "planes", ",", 
+       "points"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"testCone", " ", "=", " ", 
+       RowBox[{"makeCone", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Cos", "[", "0", "]"}], ",", 
+              RowBox[{"Sin", "[", "0", "]"}]}], "}"}]}], "*", "0.5"}], "+", 
+          RowBox[{"{", 
+           RowBox[{"0.8", ",", "1.0"}], "}"}]}], ",", 
+         RowBox[{"\[Pi]", "/", "20"}], ",", "0", ",", "1.0"}], "]"}]}], ";", 
+      RowBox[{"angles", "=", 
+       RowBox[{"{", 
+        RowBox[{"angle2", ",", 
+         RowBox[{"angle2", "+", 
+          RowBox[{
+           RowBox[{"\[Pi]", "/", "2"}], "*", "0.7"}]}], ",", 
+         RowBox[{"angle2", "+", 
+          RowBox[{"\[Pi]", "*", "0.9"}]}], ",", 
+         RowBox[{"angle2", "+", 
+          RowBox[{"\[Pi]", "*", 
+           RowBox[{"3", "/", "2"}]}]}]}], "}"}]}], ";", 
+      RowBox[{"testCircle", "=", 
+       RowBox[{"coneBoundingCircle", "[", "testCone", "]"}]}], ";", 
+      RowBox[{"planes", "=", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"normalize", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Cos", "[", "#", "]"}], ",", 
+             RowBox[{"Sin", "[", "#", "]"}], ",", 
+             RowBox[{
+              RowBox[{"-", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"Cos", "[", "#", "]"}], ",", 
+                  RowBox[{"Sin", "[", "#", "]"}]}], "}"}], ".", 
+                RowBox[{"{", 
+                 RowBox[{"0.45", ",", "0.45"}], "}"}]}]}], "-", "0.05"}]}], 
+            "}"}], "]"}], "]"}], ",", "angles"}], "]"}]}], ";", 
+      RowBox[{"points", "=", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"intersectTwoPlanes", "[", 
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"#", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "]"}], ",", 
+         RowBox[{"Partition", "[", 
+          RowBox[{"planes", ",", "2", ",", "1", ",", "1"}], "]"}]}], "]"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{"Function", "[", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Line", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"intersectTwoPlanes", "[", 
+                 RowBox[{
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}], ",", 
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+                RowBox[{"intersectTwoPlanes", "[", 
+                 RowBox[{
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}], ",", 
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "3", "]"}], "]"}]}], "]"}]}], "}"}], "]"}], 
+             "}"}], "]"}], "]"}], ",", 
+          RowBox[{"Partition", "[", 
+           RowBox[{"planes", ",", "3", ",", "1", ",", "1"}], "]"}]}], "]"}], 
+        ",", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{"Function", "[", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Gray", ",", 
+              RowBox[{"planeGraphics", "[", "#", "]"}]}], "}"}], "]"}], "]"}],
+           ",", "planes"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Green", ",", 
+           RowBox[{"Opacity", "[", "0.5", "]"}], ",", 
+           RowBox[{"boundingBoxGraphics", "[", 
+            RowBox[{"boundingBox", "[", "points", "]"}], "]"}]}], "}"}], 
+         "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"coneGraphics", "[", "testCone", "]"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"circleGraphics", "[", "testCircle", "]"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Black", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}],
+         ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"angle2", ",", "0", ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle2$$ = 3.0426413053912453`, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle2$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle2$3603$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle2$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle2$$, $CellContext`angle2$3603$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`angles$, \
+$CellContext`testCircle$, $CellContext`planes$, $CellContext`points$}, \
+$CellContext`testCone$ = $CellContext`makeCone[(-{
+               Cos[0], 
+               Sin[0]}) 0.5 + {0.8, 1.}, Pi/20, 0, 
+           1.]; $CellContext`angles$ = {$CellContext`angle2$$, \
+$CellContext`angle2$$ + (Pi/2) 0.7, $CellContext`angle2$$ + 
+           Pi 0.9, $CellContext`angle2$$ + 
+           Pi (3/2)}; $CellContext`testCircle$ = \
+$CellContext`coneBoundingCircle[$CellContext`testCone$]; $CellContext`planes$ = 
+         Map[$CellContext`normalize[{
+             Cos[#], 
+             Sin[#], -Dot[{
+                 Cos[#], 
+                 Sin[#]}, {0.45, 0.45}] - 
+             0.05}]& , $CellContext`angles$]; $CellContext`points$ = 
+         Map[$CellContext`intersectTwoPlanes[
+            Part[#, 1], 
+            Part[#, 2]]& , 
+           Partition[$CellContext`planes$, 2, 1, 1]]; Show[
+          Map[Graphics[{
+             Line[{
+               $CellContext`intersectTwoPlanes[
+                Part[#, 1], 
+                Part[#, 2]], 
+               $CellContext`intersectTwoPlanes[
+                Part[#, 2], 
+                Part[#, 3]]}]}]& , 
+           Partition[$CellContext`planes$, 3, 1, 1]], 
+          Map[Graphics[{Gray, 
+             $CellContext`planeGraphics[#]}]& , $CellContext`planes$], 
+          Graphics[{Green, 
+            Opacity[0.5], 
+            $CellContext`boundingBoxGraphics[
+             $CellContext`boundingBox[$CellContext`points$]]}], 
+          Graphics[
+           $CellContext`coneGraphics[$CellContext`testCone$]], 
+          Graphics[
+           $CellContext`circleGraphics[$CellContext`testCircle$]], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle2$$, 0, 2 Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7007724811588535`*^9, 3.701045640998188*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+  "Show", " ", "cone", " ", "vs", " ", "plane", " ", "precise", " ", "test"}],
+   " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.700875877012391*^9, 3.700875889781*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "testCone", ",", "testPlane", ",", "closestTestPoint", ",", 
+       "testColor"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"testCone", " ", "=", " ", 
+       RowBox[{"makeCone", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Cos", "[", "angle1", "]"}], ",", 
+              RowBox[{"Sin", "[", "angle1", "]"}]}], "}"}]}], "*", "0.5"}], 
+          "+", 
+          RowBox[{"{", 
+           RowBox[{"0.8", ",", "0.7"}], "}"}]}], ",", 
+         RowBox[{"\[Pi]", "/", "10"}], ",", 
+         RowBox[{"-", "angle1"}], ",", "1"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"testPlane", "=", 
+       RowBox[{"normalize", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Cos", "[", "0.32", "]"}], ",", 
+          RowBox[{"Sin", "[", "0.32", "]"}], ",", 
+          RowBox[{"-", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Cos", "[", "0.32", "]"}], ",", 
+              RowBox[{"Sin", "[", "0.32", "]"}]}], "}"}], ".", 
+            RowBox[{"{", 
+             RowBox[{"0.5", ",", "0.5"}], "}"}]}]}]}], "}"}], "]"}]}], ";", 
+      RowBox[{"closestTestPoint", "=", 
+       RowBox[{"closestConePlanePoint", "[", 
+        RowBox[{"testCone", ",", "testPlane"}], "]"}]}], ";", 
+      RowBox[{"testColor", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"testConeVsPlane", "[", 
+          RowBox[{"testCone", ",", "testPlane"}], "]"}], ",", "Red", ",", 
+         "Green"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"testColor", ",", 
+           RowBox[{"planeGraphics", "[", "testPlane", "]"}]}], "}"}], "]"}], 
+        ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"testColor", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"projectPointOntoPlane", "[", 
+               RowBox[{"testPlane", ",", "closestTestPoint"}], "]"}], ",", 
+              "closestTestPoint"}], "}"}], "]"}]}], "}"}], "]"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"coneGraphics", "[", "testCone", "]"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Black", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}],
+         ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"angle1", ",", "0", ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.700875894760547*^9, 3.700875944925501*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle1$$ = 4.974679321930795, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle1$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle1$3629$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle1$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle1$$, $CellContext`angle1$3629$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`testPlane$, \
+$CellContext`closestTestPoint$, $CellContext`testColor$}, \
+$CellContext`testCone$ = $CellContext`makeCone[(-{
+               Cos[$CellContext`angle1$$], 
+               Sin[$CellContext`angle1$$]}) 0.5 + {0.8, 0.7}, Pi/
+           10, -$CellContext`angle1$$, 
+           1]; $CellContext`testPlane$ = $CellContext`normalize[{
+            Cos[0.32], 
+            Sin[0.32], -Dot[{
+               Cos[0.32], 
+               Sin[0.32]}, {0.5, 
+              0.5}]}]; $CellContext`closestTestPoint$ = \
+$CellContext`closestConePlanePoint[$CellContext`testCone$, \
+$CellContext`testPlane$]; $CellContext`testColor$ = If[
+           $CellContext`testConeVsPlane[$CellContext`testCone$, \
+$CellContext`testPlane$], Red, Green]; Show[
+          Graphics[{$CellContext`testColor$, 
+            $CellContext`planeGraphics[$CellContext`testPlane$]}], 
+          Graphics[{$CellContext`testColor$, 
+            Arrow[{
+              $CellContext`projectPointOntoPlane[$CellContext`testPlane$, \
+$CellContext`closestTestPoint$], $CellContext`closestTestPoint$}]}], 
+          Graphics[
+           $CellContext`coneGraphics[$CellContext`testCone$]], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle1$$, 0, 2 Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7008759458473806`*^9, 3.701045641062359*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Cone", " ", "vs", " ", "frustum", " ", "test"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"Animate", "[", 
+   RowBox[{
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"testCone", ",", "angles", ",", "planes"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"testCone", " ", "=", " ", 
+        RowBox[{"makeCone", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Cos", "[", "0", "]"}], ",", 
+               RowBox[{"Sin", "[", "0", "]"}]}], "}"}]}], "*", "0.5"}], "+", 
+           RowBox[{"{", 
+            RowBox[{"0.5", ",", "1.0"}], "}"}]}], ",", 
+          RowBox[{"\[Pi]", "/", "20"}], ",", 
+          RowBox[{"-", "0"}], ",", "2.0"}], "]"}]}], ";", 
+       RowBox[{"angles", "=", 
+        RowBox[{"{", 
+         RowBox[{"angle2", ",", 
+          RowBox[{"angle2", "+", 
+           RowBox[{
+            RowBox[{"\[Pi]", "/", "2"}], "*", "0.7"}]}], ",", 
+          RowBox[{"angle2", "+", 
+           RowBox[{"\[Pi]", "*", "0.9"}]}], ",", 
+          RowBox[{"angle2", "+", 
+           RowBox[{"\[Pi]", "*", 
+            RowBox[{"3", "/", "2"}]}]}]}], "}"}]}], ";", 
+       RowBox[{"planes", "=", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{"Function", "[", 
+           RowBox[{"normalize", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Cos", "[", "#", "]"}], ",", 
+              RowBox[{"Sin", "[", "#", "]"}], ",", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"Cos", "[", "#", "]"}], ",", 
+                   RowBox[{"Sin", "[", "#", "]"}]}], "}"}], ".", 
+                 RowBox[{"{", 
+                  RowBox[{"0.5", ",", "0.5"}], "}"}]}]}], "+", 
+               RowBox[{"-", "0.05"}]}]}], "}"}], "]"}], "]"}], ",", 
+          "angles"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{"Function", "[", 
+            RowBox[{"Graphics", "[", 
+             RowBox[{"{", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"intersectTwoPlanes", "[", 
+                  RowBox[{
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+                 RowBox[{"intersectTwoPlanes", "[", 
+                  RowBox[{
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], ",", 
+                   RowBox[{"#", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}]}], "]"}]}], "}"}], "]"}], 
+              "}"}], "]"}], "]"}], ",", 
+           RowBox[{"Partition", "[", 
+            RowBox[{"planes", ",", "3", ",", "1", ",", "1"}], "]"}]}], "]"}], 
+         ",", 
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{"Function", "[", 
+            RowBox[{"Graphics", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{"testConeVsPlane", "[", 
+                  RowBox[{"testCone", ",", "#"}], "]"}], ",", "Red", ",", 
+                 "Green"}], "]"}], ",", 
+               RowBox[{"planeGraphics", "[", "#", "]"}]}], "}"}], "]"}], 
+            "]"}], ",", "planes"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"coneGraphics", "[", "testCone", "]"}], "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"Black", ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+          "]"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}],
+      "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"angle2", ",", "0", ",", 
+      RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7008774783732276`*^9, 3.700877485436537*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle2$$ = 5.830766435932489, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle2$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle2$3656$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle2$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle2$$, $CellContext`angle2$3656$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`angles$, \
+$CellContext`planes$}, $CellContext`testCone$ = $CellContext`makeCone[(-{
+               Cos[0], 
+               Sin[0]}) 0.5 + {0.5, 1.}, Pi/20, 0, 
+           2.]; $CellContext`angles$ = {$CellContext`angle2$$, \
+$CellContext`angle2$$ + (Pi/2) 0.7, $CellContext`angle2$$ + 
+           Pi 0.9, $CellContext`angle2$$ + Pi (3/2)}; $CellContext`planes$ = 
+         Map[$CellContext`normalize[{
+             Cos[#], 
+             Sin[#], -Dot[{
+                 Cos[#], 
+                 Sin[#]}, {0.5, 0.5}] - 0.05}]& , $CellContext`angles$]; Show[
+          Map[Graphics[{
+             Line[{
+               $CellContext`intersectTwoPlanes[
+                Part[#, 1], 
+                Part[#, 2]], 
+               $CellContext`intersectTwoPlanes[
+                Part[#, 2], 
+                Part[#, 3]]}]}]& , 
+           Partition[$CellContext`planes$, 3, 1, 1]], 
+          Map[Graphics[{
+             If[
+              $CellContext`testConeVsPlane[$CellContext`testCone$, #], Red, 
+              Green], 
+             $CellContext`planeGraphics[#]}]& , $CellContext`planes$], 
+          Graphics[
+           $CellContext`coneGraphics[$CellContext`testCone$]], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle2$$, 0, 2 Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7008774861598067`*^9, 3.7010456411470547`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+  "How", " ", "bad", " ", "is", " ", "cone", " ", "vs", " ", "4", " ", 
+   "planes", " ", "test", " ", "in", " ", 
+   RowBox[{"practice", "?", " ", "Showing"}], " ", "with", " ", "a", " ", 
+   "grid"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.700954501710061*^9, 3.7009545161972065`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"testCone", ",", "angles"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"testCone", " ", "=", " ", 
+       RowBox[{"makeCone", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Cos", "[", "angle", "]"}], ",", 
+              RowBox[{"Sin", "[", "angle", "]"}]}], "}"}]}], "*", "0.5"}], 
+          "+", 
+          RowBox[{"{", 
+           RowBox[{"0.5", ",", "1.0"}], "}"}]}], ",", 
+         RowBox[{"\[Pi]", "/", "20"}], ",", 
+         RowBox[{"-", "angle"}], ",", "2.0"}], "]"}]}], ";", 
+      RowBox[{"angles", "=", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", 
+         RowBox[{"0", "+", 
+          RowBox[{"\[Pi]", "/", "2"}]}], ",", 
+         RowBox[{"0", "+", "\[Pi]"}], ",", 
+         RowBox[{"0", "+", 
+          RowBox[{"\[Pi]", "*", 
+           RowBox[{"3", "/", "2"}]}]}]}], "}"}]}], ";", 
+      RowBox[{"Show", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Module", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"planes", "=", 
+              RowBox[{"Map", "[", 
+               RowBox[{
+                RowBox[{"Function", "[", 
+                 RowBox[{"normalize", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"Cos", "[", "#", "]"}], ",", 
+                    RowBox[{"Sin", "[", "#", "]"}], ",", 
+                    RowBox[{
+                    RowBox[{"-", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Cos", "[", "#", "]"}], ",", 
+                    RowBox[{"Sin", "[", "#", "]"}]}], "}"}], ".", 
+                    RowBox[{"{", 
+                    RowBox[{"x", ",", "y"}], "}"}]}]}], "-", "0.09"}]}], 
+                   "}"}], "]"}], "]"}], ",", "angles"}], "]"}]}], "}"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"Map", "[", 
+             RowBox[{
+              RowBox[{"Function", "[", 
+               RowBox[{"Graphics", "[", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"Total", "[", 
+                    RowBox[{"Map", "[", 
+                    RowBox[{
+                    RowBox[{"Function", "[", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"testConeVsPlane", "[", 
+                    RowBox[{"testCone", ",", "#"}], "]"}], ",", "1", ",", 
+                    "0"}], "]"}], "]"}], ",", "planes"}], "]"}], "]"}], 
+                    "\[Equal]", "4"}], " ", ",", "Red", ",", "Green"}], "]"}],
+                   ",", 
+                  RowBox[{"{", 
+                   RowBox[{"Line", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"intersectTwoPlanes", "[", 
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+                    RowBox[{"intersectTwoPlanes", "[", 
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], ",", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}]}], "]"}]}], "}"}], "]"}], 
+                   "}"}]}], "}"}], "]"}], "]"}], ",", 
+              RowBox[{"Partition", "[", 
+               RowBox[{"planes", ",", "3", ",", "1", ",", "1"}], "]"}]}], 
+             "]"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", 
+            RowBox[{"-", "0.25"}], ",", "2", ",", "0.2"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"y", ",", 
+            RowBox[{"-", "0.25"}], ",", "2", ",", "0.2"}], "}"}]}], "]"}], 
+        ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"coneGraphics", "[", "testCone", "]"}], "}"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Black", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}],
+         ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"angle", ",", "0", ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle$$ = 0, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle$3695$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle$$, $CellContext`angle$3695$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`angles$}, \
+$CellContext`testCone$ = $CellContext`makeCone[(-{
+               Cos[$CellContext`angle$$], 
+               Sin[$CellContext`angle$$]}) 0.5 + {0.5, 1.}, Pi/
+           20, -$CellContext`angle$$, 2.]; $CellContext`angles$ = {
+          0, 0 + Pi/2, 0 + Pi, 0 + Pi (3/2)}; Show[
+          Table[
+           Module[{$CellContext`planes$ = Map[$CellContext`normalize[{
+                 Cos[#], 
+                 Sin[#], -Dot[{
+                    Cos[#], 
+                    Sin[#]}, {$CellContext`x, $CellContext`y}] - 
+                 0.09}]& , $CellContext`angles$]}, 
+            Map[Graphics[{
+               If[Total[
+                  Map[If[
+                    $CellContext`testConeVsPlane[$CellContext`testCone$, #], 
+                    1, 0]& , $CellContext`planes$]] == 4, Red, Green], {
+                Line[{
+                  $CellContext`intersectTwoPlanes[
+                   Part[#, 1], 
+                   Part[#, 2]], 
+                  $CellContext`intersectTwoPlanes[
+                   Part[#, 2], 
+                   Part[#, 3]]}]}}]& , 
+             
+             Partition[$CellContext`planes$, 3, 1, 
+              1]]], {$CellContext`x, -0.25, 2, 0.2}, {$CellContext`y, -0.25, 
+            2, 0.2}], 
+          Graphics[{
+            $CellContext`coneGraphics[$CellContext`testCone$]}], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle$$, 0, 2 Pi}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {223., 230.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.700954519250702*^9, 3.701045641213255*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"Show", " ", "cone", " ", "vs", " ", "sphere", " ", "test"}], 
+  "*)"}]], "Input",
+ CellChangeTimes->{{3.700962190625354*^9, 3.7009621984336195`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "testCone", ",", "testSphere", ",", "coneSpereAxis", ",", 
+       "coneSphereAxisPerp", ",", "closestConeSpherePoint"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"testCone", " ", "=", " ", 
+       RowBox[{"makeCone", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Cos", "[", "angle1", "]"}], ",", 
+              RowBox[{"Sin", "[", "angle1", "]"}]}], "}"}]}], "*", "0.5"}], 
+          "+", 
+          RowBox[{"{", 
+           RowBox[{"0.8", ",", "0.7"}], "}"}]}], ",", 
+         RowBox[{"\[Pi]", "/", "15"}], ",", 
+         RowBox[{"-", "angle1"}], ",", "1"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"testSphere", "=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0.2", ",", "0.2"}], "}"}], ",", "0.4"}], "}"}]}], ";", 
+      RowBox[{"coneSpereAxis", "=", 
+       RowBox[{
+        RowBox[{"coneForward", "[", "testCone", "]"}], "*", 
+        RowBox[{"Clip", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"testSphere", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "-", 
+             RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+           RowBox[{"coneForward", "[", "testCone", "]"}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1"}], "}"}]}], "]"}]}]}], ";", 
+      RowBox[{"coneSphereAxisPerp", "=", 
+       RowBox[{
+        RowBox[{"testSphere", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "-", 
+        RowBox[{"coneCenter", "[", "testCone", "]"}], "-", 
+        RowBox[{
+         RowBox[{"coneForward", "[", "testCone", "]"}], "*", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"testSphere", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "-", 
+            RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+          RowBox[{"coneForward", "[", "testCone", "]"}]}]}]}]}], ";", 
+      RowBox[{"coneSphereAxisPerp", "=", 
+       RowBox[{
+        RowBox[{"Min", "[", 
+         RowBox[{
+          RowBox[{"Norm", "[", "coneSphereAxisPerp", "]"}], ",", 
+          RowBox[{
+           RowBox[{"Norm", "[", "coneSpereAxis", "]"}], "*", 
+           RowBox[{"Tan", "[", 
+            RowBox[{"coneAngle", "[", "testCone", "]"}], "]"}]}]}], "]"}], 
+        "*", 
+        RowBox[{"Normalize", "[", "coneSphereAxisPerp", "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"closestConeSpherePoint", "=", 
+       RowBox[{"coneSpereAxis", "+", "coneSphereAxisPerp", "+", 
+        RowBox[{"coneCenter", "[", "testCone", "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Line", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"testSphere", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], ",", 
+              RowBox[{"coneCenter", "[", "testCone", "]"}]}], "}"}], "]"}], 
+           ",", 
+           RowBox[{"Text", "[", 
+            RowBox[{"\"\<V\>\"", ",", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"testSphere", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "+", 
+                RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], "*", 
+              "0.5"}]}], "]"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Norm", "[", 
+               RowBox[{"closestConeSpherePoint", "-", 
+                RowBox[{"testSphere", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "<", 
+              RowBox[{"testSphere", "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], ",", "Red", ",", "Green"}], 
+            "]"}], ",", 
+           RowBox[{"Opacity", "[", "0.5", "]"}], ",", 
+           RowBox[{"Disk", "[", 
+            RowBox[{
+             RowBox[{"testSphere", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", 
+             RowBox[{"testSphere", "[", 
+              RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], "}"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"coneCenter", "[", "testCone", "]"}], ",", 
+              RowBox[{
+               RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+               "coneSpereAxis"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Text", "[", 
+            RowBox[{"\"\<V1\>\"", ",", 
+             RowBox[{
+              RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+              RowBox[{"coneSpereAxis", "*", "0.5"}]}]}], "]"}]}], "}"}], 
+         "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+               "coneSpereAxis"}], ",", "closestConeSpherePoint"}], "}"}], 
+            "]"}], ",", 
+           RowBox[{"Text", "[", 
+            RowBox[{"\"\<V2\>\"", ",", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+                "coneSpereAxis", "+", "closestConeSpherePoint"}], ")"}], "*", 
+              "0.5"}]}], "]"}]}], "}"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"testSphere", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", "closestConeSpherePoint"}], 
+           "}"}], "]"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Blue", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"testSphere", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], ",", 
+              RowBox[{
+               RowBox[{"testSphere", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "+", 
+               RowBox[{
+                RowBox[{"Normalize", "[", 
+                 RowBox[{"closestConeSpherePoint", "-", 
+                  RowBox[{"testSphere", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "*", 
+                RowBox[{"Min", "[", 
+                 RowBox[{
+                  RowBox[{"Norm", "[", 
+                   RowBox[{"closestConeSpherePoint", "-", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+                  RowBox[{"testSphere", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}]}]}], "}"}], 
+            "]"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"coneGraphics", "[", "testCone", "]"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Black", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}],
+         ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"angle1", ",", "0", ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{3.7009626989626603`*^9}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle1$$ = 5.097615897854924, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle1$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle1$8473$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle1$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle1$$, $CellContext`angle1$8473$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`testSphere$, \
+$CellContext`coneSpereAxis$, $CellContext`coneSphereAxisPerp$, \
+$CellContext`closestConeSpherePoint$}, $CellContext`testCone$ = \
+$CellContext`makeCone[(-{
+               Cos[$CellContext`angle1$$], 
+               Sin[$CellContext`angle1$$]}) 0.5 + {0.8, 0.7}, Pi/
+           15, -$CellContext`angle1$$, 1]; $CellContext`testSphere$ = {{0.2, 
+           0.2}, 0.4}; $CellContext`coneSpereAxis$ = \
+$CellContext`coneForward[$CellContext`testCone$] Clip[
+            Dot[
+            Part[$CellContext`testSphere$, 
+               1] - $CellContext`coneCenter[$CellContext`testCone$], 
+             $CellContext`coneForward[$CellContext`testCone$]], {0, 
+            1}]; $CellContext`coneSphereAxisPerp$ = 
+         Part[$CellContext`testSphere$, 
+            1] - $CellContext`coneCenter[$CellContext`testCone$] - \
+$CellContext`coneForward[$CellContext`testCone$] 
+          Dot[Part[$CellContext`testSphere$, 
+              1] - $CellContext`coneCenter[$CellContext`testCone$], 
+            $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSphereAxisPerp$ = Min[
+            Norm[$CellContext`coneSphereAxisPerp$], 
+            Norm[$CellContext`coneSpereAxis$] Tan[
+              $CellContext`coneAngle[$CellContext`testCone$]]] 
+          Normalize[$CellContext`coneSphereAxisPerp$]; \
+$CellContext`closestConeSpherePoint$ = $CellContext`coneSpereAxis$ + \
+$CellContext`coneSphereAxisPerp$ + \
+$CellContext`coneCenter[$CellContext`testCone$]; Show[
+          Graphics[{
+            Line[{
+              Part[$CellContext`testSphere$, 1], 
+              $CellContext`coneCenter[$CellContext`testCone$]}], 
+            Text[
+            "V", (Part[$CellContext`testSphere$, 
+                1] + $CellContext`coneCenter[$CellContext`testCone$]) 0.5]}], 
+          Graphics[{
+            If[
+            Norm[$CellContext`closestConeSpherePoint$ - 
+               Part[$CellContext`testSphere$, 1]] < 
+             Part[$CellContext`testSphere$, 2], Red, Green], 
+            Opacity[0.5], 
+            Disk[
+             Part[$CellContext`testSphere$, 1], 
+             Part[$CellContext`testSphere$, 2]]}], 
+          Graphics[{
+            Arrow[{
+              $CellContext`coneCenter[$CellContext`testCone$], \
+$CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$}], 
+            Text[
+            "V1", $CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$ 0.5]}], 
+          Graphics[{
+            
+            Arrow[{$CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$, $CellContext`closestConeSpherePoint$}], 
+            Text[
+            "V2", ($CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$ + $CellContext`closestConeSpherePoint$) 0.5]}], 
+          Graphics[
+           Line[{
+             
+             Part[$CellContext`testSphere$, 
+              1], $CellContext`closestConeSpherePoint$}]], 
+          Graphics[{Blue, 
+            Arrow[{
+              Part[$CellContext`testSphere$, 1], 
+              Part[$CellContext`testSphere$, 1] + 
+              Normalize[$CellContext`closestConeSpherePoint$ - 
+                 Part[$CellContext`testSphere$, 1]] Min[
+                 
+                 Norm[$CellContext`closestConeSpherePoint$ - 
+                  Part[$CellContext`testSphere$, 1]], 
+                 Part[$CellContext`testSphere$, 2]]}]}], 
+          Graphics[
+           $CellContext`coneGraphics[$CellContext`testCone$]], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle1$$, 0, 2 Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.700962202261633*^9, 3.700962699578006*^9, 
+  3.701045642191831*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"Charles", " ", "Bloom", " ", "simplified", " ", "test"}], 
+  "*)"}]], "Input",
+ CellChangeTimes->{{3.7009634648430605`*^9, 3.700963472447377*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "testCone", ",", "testSphere", ",", "coneSpereAxis", ",", 
+       "coneSphereAxisPerp", ",", "closestConeSpherePoint"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"testCone", " ", "=", " ", 
+       RowBox[{"makeCone", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Cos", "[", "angle1", "]"}], ",", 
+              RowBox[{"Sin", "[", "angle1", "]"}]}], "}"}]}], "*", "0.5"}], 
+          "+", 
+          RowBox[{"{", 
+           RowBox[{"0.8", ",", "0.7"}], "}"}]}], ",", 
+         RowBox[{"\[Pi]", "/", "15"}], ",", 
+         RowBox[{"-", "angle1"}], ",", "1"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"testSphere", "=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0.2", ",", "0.2"}], "}"}], ",", "0.1"}], "}"}]}], ";", 
+      RowBox[{"coneSpereAxis", "=", 
+       RowBox[{
+        RowBox[{"coneForward", "[", "testCone", "]"}], "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"testSphere", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "-", 
+           RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+         RowBox[{"coneForward", "[", "testCone", "]"}]}]}]}], ";", 
+      RowBox[{"coneSphereAxisPerp", "=", 
+       RowBox[{
+        RowBox[{"testSphere", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "-", 
+        RowBox[{"coneCenter", "[", "testCone", "]"}], "-", 
+        RowBox[{
+         RowBox[{"coneForward", "[", "testCone", "]"}], "*", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"testSphere", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "-", 
+            RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+          RowBox[{"coneForward", "[", "testCone", "]"}]}]}]}]}], ";", 
+      RowBox[{"coneSphereAxisPerp", "=", 
+       RowBox[{
+        RowBox[{"Min", "[", 
+         RowBox[{
+          RowBox[{"Norm", "[", "coneSphereAxisPerp", "]"}], ",", 
+          RowBox[{
+           RowBox[{"Norm", "[", "coneSpereAxis", "]"}], "*", 
+           RowBox[{"Tan", "[", 
+            RowBox[{"coneAngle", "[", "testCone", "]"}], "]"}]}]}], "]"}], 
+        "*", 
+        RowBox[{"Normalize", "[", "coneSphereAxisPerp", "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"closestConeSpherePoint", "=", 
+       RowBox[{"coneSpereAxis", "+", "coneSphereAxisPerp", "+", 
+        RowBox[{"coneCenter", "[", "testCone", "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Line", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"testSphere", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], ",", 
+              RowBox[{"coneCenter", "[", "testCone", "]"}]}], "}"}], "]"}], 
+           ",", 
+           RowBox[{"Text", "[", 
+            RowBox[{"\"\<V\>\"", ",", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"testSphere", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "+", 
+                RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], "*", 
+              "0.5"}]}], "]"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Norm", "[", 
+               RowBox[{"closestConeSpherePoint", "-", 
+                RowBox[{"testSphere", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "<", 
+              RowBox[{"testSphere", "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], ",", "Red", ",", "Green"}], 
+            "]"}], ",", 
+           RowBox[{"Opacity", "[", "0.5", "]"}], ",", 
+           RowBox[{"Disk", "[", 
+            RowBox[{
+             RowBox[{"testSphere", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", 
+             RowBox[{"testSphere", "[", 
+              RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], "}"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"coneCenter", "[", "testCone", "]"}], ",", 
+              RowBox[{
+               RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+               "coneSpereAxis"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Text", "[", 
+            RowBox[{"\"\<V1\>\"", ",", 
+             RowBox[{
+              RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+              RowBox[{"coneSpereAxis", "*", "0.5"}]}]}], "]"}]}], "}"}], 
+         "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+               "coneSpereAxis"}], ",", "closestConeSpherePoint"}], "}"}], 
+            "]"}], ",", 
+           RowBox[{"Text", "[", 
+            RowBox[{"\"\<V2\>\"", ",", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+                "coneSpereAxis", "+", "closestConeSpherePoint"}], ")"}], "*", 
+              "0.5"}]}], "]"}]}], "}"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"testSphere", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", "closestConeSpherePoint"}], 
+           "}"}], "]"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Blue", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"testSphere", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], ",", 
+              RowBox[{
+               RowBox[{"testSphere", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "+", 
+               RowBox[{
+                RowBox[{"Normalize", "[", 
+                 RowBox[{"closestConeSpherePoint", "-", 
+                  RowBox[{"testSphere", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "*", 
+                RowBox[{"Min", "[", 
+                 RowBox[{
+                  RowBox[{"Norm", "[", 
+                   RowBox[{"closestConeSpherePoint", "-", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+                  RowBox[{"testSphere", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}]}]}], "}"}], 
+            "]"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"coneGraphics", "[", "testCone", "]"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Black", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}],
+         ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"angle1", ",", "0", ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle1$$ = 5.988508796249245, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle1$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle1$8502$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle1$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle1$$, $CellContext`angle1$8502$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`testSphere$, \
+$CellContext`coneSpereAxis$, $CellContext`coneSphereAxisPerp$, \
+$CellContext`closestConeSpherePoint$}, $CellContext`testCone$ = \
+$CellContext`makeCone[(-{
+               Cos[$CellContext`angle1$$], 
+               Sin[$CellContext`angle1$$]}) 0.5 + {0.8, 0.7}, Pi/
+           15, -$CellContext`angle1$$, 1]; $CellContext`testSphere$ = {{0.2, 
+           0.2}, 0.1}; $CellContext`coneSpereAxis$ = \
+$CellContext`coneForward[$CellContext`testCone$] 
+          Dot[Part[$CellContext`testSphere$, 
+              1] - $CellContext`coneCenter[$CellContext`testCone$], 
+            $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSphereAxisPerp$ = 
+         Part[$CellContext`testSphere$, 
+            1] - $CellContext`coneCenter[$CellContext`testCone$] - \
+$CellContext`coneForward[$CellContext`testCone$] 
+          Dot[Part[$CellContext`testSphere$, 
+              1] - $CellContext`coneCenter[$CellContext`testCone$], 
+            $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSphereAxisPerp$ = Min[
+            Norm[$CellContext`coneSphereAxisPerp$], 
+            Norm[$CellContext`coneSpereAxis$] Tan[
+              $CellContext`coneAngle[$CellContext`testCone$]]] 
+          Normalize[$CellContext`coneSphereAxisPerp$]; \
+$CellContext`closestConeSpherePoint$ = $CellContext`coneSpereAxis$ + \
+$CellContext`coneSphereAxisPerp$ + \
+$CellContext`coneCenter[$CellContext`testCone$]; Show[
+          Graphics[{
+            Line[{
+              Part[$CellContext`testSphere$, 1], 
+              $CellContext`coneCenter[$CellContext`testCone$]}], 
+            Text[
+            "V", (Part[$CellContext`testSphere$, 
+                1] + $CellContext`coneCenter[$CellContext`testCone$]) 0.5]}], 
+          Graphics[{
+            If[
+            Norm[$CellContext`closestConeSpherePoint$ - 
+               Part[$CellContext`testSphere$, 1]] < 
+             Part[$CellContext`testSphere$, 2], Red, Green], 
+            Opacity[0.5], 
+            Disk[
+             Part[$CellContext`testSphere$, 1], 
+             Part[$CellContext`testSphere$, 2]]}], 
+          Graphics[{
+            Arrow[{
+              $CellContext`coneCenter[$CellContext`testCone$], \
+$CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$}], 
+            Text[
+            "V1", $CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$ 0.5]}], 
+          Graphics[{
+            
+            Arrow[{$CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$, $CellContext`closestConeSpherePoint$}], 
+            Text[
+            "V2", ($CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$ + $CellContext`closestConeSpherePoint$) 0.5]}], 
+          Graphics[
+           Line[{
+             
+             Part[$CellContext`testSphere$, 
+              1], $CellContext`closestConeSpherePoint$}]], 
+          Graphics[{Blue, 
+            Arrow[{
+              Part[$CellContext`testSphere$, 1], 
+              Part[$CellContext`testSphere$, 1] + 
+              Normalize[$CellContext`closestConeSpherePoint$ - 
+                 Part[$CellContext`testSphere$, 1]] Min[
+                 
+                 Norm[$CellContext`closestConeSpherePoint$ - 
+                  Part[$CellContext`testSphere$, 1]], 
+                 Part[$CellContext`testSphere$, 2]]}]}], 
+          Graphics[
+           $CellContext`coneGraphics[$CellContext`testCone$]], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle1$$, 0, 2 Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7009634748064837`*^9, 3.701045642283106*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"Corrected", ",", " ", 
+   RowBox[{"still", " ", "very", " ", "cheap", " ", "version"}]}], 
+  "*)"}]], "Input",
+ CellChangeTimes->{{3.700963913828549*^9, 3.700963921510038*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "testCone", ",", "testSphere", ",", "coneSpereAxisL", ",", 
+       "coneSpereAxis", ",", "coneSphereAxisPerp", ",", 
+       "closestConeSpherePoint"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"testCone", " ", "=", " ", 
+       RowBox[{"makeCone", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Cos", "[", "angle1", "]"}], ",", 
+              RowBox[{"Sin", "[", "angle1", "]"}]}], "}"}]}], "*", "0.5"}], 
+          "+", 
+          RowBox[{"{", 
+           RowBox[{"0.8", ",", "0.7"}], "}"}]}], ",", 
+         RowBox[{"\[Pi]", "/", "15"}], ",", 
+         RowBox[{"-", "angle1"}], ",", "1"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"testSphere", "=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0.3", ",", "0.3"}], "}"}], ",", "0.1"}], "}"}]}], ";", 
+      RowBox[{"coneSphereAxisL", "=", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"testSphere", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "-", 
+          RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+        RowBox[{"coneForward", "[", "testCone", "]"}]}]}], ";", 
+      RowBox[{"coneSpereAxis", "=", 
+       RowBox[{
+        RowBox[{"coneForward", "[", "testCone", "]"}], "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"testSphere", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "-", 
+           RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+         RowBox[{"coneForward", "[", "testCone", "]"}]}]}]}], ";", 
+      RowBox[{"coneSphereAxisPerp", "=", 
+       RowBox[{
+        RowBox[{"testSphere", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "-", 
+        RowBox[{"coneCenter", "[", "testCone", "]"}], "-", 
+        RowBox[{
+         RowBox[{"coneForward", "[", "testCone", "]"}], "*", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"testSphere", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "-", 
+            RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+          RowBox[{"coneForward", "[", "testCone", "]"}]}]}]}]}], ";", 
+      RowBox[{"coneSphereAxisPerp", "=", 
+       RowBox[{
+        RowBox[{"Min", "[", 
+         RowBox[{
+          RowBox[{"Norm", "[", "coneSphereAxisPerp", "]"}], ",", 
+          RowBox[{
+           RowBox[{"Norm", "[", "coneSpereAxis", "]"}], "*", 
+           RowBox[{"Tan", "[", 
+            RowBox[{"coneAngle", "[", "testCone", "]"}], "]"}]}]}], "]"}], 
+        "*", 
+        RowBox[{"Normalize", "[", "coneSphereAxisPerp", "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"closestConeSpherePoint", "=", 
+       RowBox[{"coneSpereAxis", "+", "coneSphereAxisPerp", "+", 
+        RowBox[{"coneCenter", "[", "testCone", "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Line", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"testSphere", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], ",", 
+              RowBox[{"coneCenter", "[", "testCone", "]"}]}], "}"}], "]"}], 
+           ",", 
+           RowBox[{"Text", "[", 
+            RowBox[{"\"\<V\>\"", ",", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"testSphere", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "+", 
+                RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], "*", 
+              "0.5"}]}], "]"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Norm", "[", 
+                RowBox[{"closestConeSpherePoint", "-", 
+                 RowBox[{"testSphere", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "<", 
+               RowBox[{"testSphere", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}], "&&", 
+              RowBox[{"coneSphereAxisL", ">", 
+               RowBox[{"-", " ", 
+                RowBox[{"testSphere", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}]}]}], "&&", 
+              RowBox[{"coneSphereAxisL", "<", 
+               RowBox[{
+                RowBox[{"coneLength", "[", "testCone", "]"}], "+", " ", 
+                RowBox[{"testSphere", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}]}]}]}], ",", "Red", ",", 
+             "Green"}], "]"}], ",", 
+           RowBox[{"Opacity", "[", "0.5", "]"}], ",", 
+           RowBox[{"Disk", "[", 
+            RowBox[{
+             RowBox[{"testSphere", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", 
+             RowBox[{"testSphere", "[", 
+              RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], "}"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"coneCenter", "[", "testCone", "]"}], ",", 
+              RowBox[{
+               RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+               "coneSpereAxis"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Text", "[", 
+            RowBox[{"\"\<V1\>\"", ",", 
+             RowBox[{
+              RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+              RowBox[{"coneSpereAxis", "*", "0.5"}]}]}], "]"}]}], "}"}], 
+         "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+               "coneSpereAxis"}], ",", "closestConeSpherePoint"}], "}"}], 
+            "]"}], ",", 
+           RowBox[{"Text", "[", 
+            RowBox[{"\"\<V2\>\"", ",", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"coneCenter", "[", "testCone", "]"}], "+", 
+                "coneSpereAxis", "+", "closestConeSpherePoint"}], ")"}], "*", 
+              "0.5"}]}], "]"}]}], "}"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"testSphere", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", "closestConeSpherePoint"}], 
+           "}"}], "]"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Blue", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"testSphere", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], ",", 
+              RowBox[{
+               RowBox[{"testSphere", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "+", 
+               RowBox[{
+                RowBox[{"Normalize", "[", 
+                 RowBox[{"closestConeSpherePoint", "-", 
+                  RowBox[{"testSphere", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "*", 
+                RowBox[{"Min", "[", 
+                 RowBox[{
+                  RowBox[{"Norm", "[", 
+                   RowBox[{"closestConeSpherePoint", "-", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+                  RowBox[{"testSphere", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}]}]}], "}"}], 
+            "]"}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"coneGraphics", "[", "testCone", "]"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Black", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}],
+         ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"angle1", ",", "0", ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle1$$ = 0.21770483041946223`, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle1$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle1$8527$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle1$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle1$$, $CellContext`angle1$8527$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`testSphere$, \
+$CellContext`coneSpereAxisL$, $CellContext`coneSpereAxis$, \
+$CellContext`coneSphereAxisPerp$, $CellContext`closestConeSpherePoint$}, \
+$CellContext`testCone$ = $CellContext`makeCone[(-{
+               Cos[$CellContext`angle1$$], 
+               Sin[$CellContext`angle1$$]}) 0.5 + {0.8, 0.7}, Pi/
+           15, -$CellContext`angle1$$, 1]; $CellContext`testSphere$ = {{0.3, 
+           0.3}, 0.1}; $CellContext`coneSphereAxisL = 
+         Dot[Part[$CellContext`testSphere$, 
+             1] - $CellContext`coneCenter[$CellContext`testCone$], 
+           $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSpereAxis$ = $CellContext`coneForward[$CellContext`testCone$]
+            Dot[Part[$CellContext`testSphere$, 
+              1] - $CellContext`coneCenter[$CellContext`testCone$], 
+            $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSphereAxisPerp$ = 
+         Part[$CellContext`testSphere$, 
+            1] - $CellContext`coneCenter[$CellContext`testCone$] - \
+$CellContext`coneForward[$CellContext`testCone$] 
+          Dot[Part[$CellContext`testSphere$, 
+              1] - $CellContext`coneCenter[$CellContext`testCone$], 
+            $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSphereAxisPerp$ = Min[
+            Norm[$CellContext`coneSphereAxisPerp$], 
+            Norm[$CellContext`coneSpereAxis$] Tan[
+              $CellContext`coneAngle[$CellContext`testCone$]]] 
+          Normalize[$CellContext`coneSphereAxisPerp$]; \
+$CellContext`closestConeSpherePoint$ = $CellContext`coneSpereAxis$ + \
+$CellContext`coneSphereAxisPerp$ + \
+$CellContext`coneCenter[$CellContext`testCone$]; Show[
+          Graphics[{
+            Line[{
+              Part[$CellContext`testSphere$, 1], 
+              $CellContext`coneCenter[$CellContext`testCone$]}], 
+            Text[
+            "V", (Part[$CellContext`testSphere$, 
+                1] + $CellContext`coneCenter[$CellContext`testCone$]) 0.5]}], 
+          Graphics[{
+            If[
+             And[
+             Norm[$CellContext`closestConeSpherePoint$ - 
+                Part[$CellContext`testSphere$, 1]] < 
+              Part[$CellContext`testSphere$, 
+                2], $CellContext`coneSphereAxisL > -
+               Part[$CellContext`testSphere$, 
+                 2], $CellContext`coneSphereAxisL < \
+$CellContext`coneLength[$CellContext`testCone$] + 
+               Part[$CellContext`testSphere$, 2]], Red, Green], 
+            Opacity[0.5], 
+            Disk[
+             Part[$CellContext`testSphere$, 1], 
+             Part[$CellContext`testSphere$, 2]]}], 
+          Graphics[{
+            Arrow[{
+              $CellContext`coneCenter[$CellContext`testCone$], \
+$CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$}], 
+            Text[
+            "V1", $CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$ 0.5]}], 
+          Graphics[{
+            
+            Arrow[{$CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$, $CellContext`closestConeSpherePoint$}], 
+            Text[
+            "V2", ($CellContext`coneCenter[$CellContext`testCone$] + \
+$CellContext`coneSpereAxis$ + $CellContext`closestConeSpherePoint$) 0.5]}], 
+          Graphics[
+           Line[{
+             
+             Part[$CellContext`testSphere$, 
+              1], $CellContext`closestConeSpherePoint$}]], 
+          Graphics[{Blue, 
+            Arrow[{
+              Part[$CellContext`testSphere$, 1], 
+              Part[$CellContext`testSphere$, 1] + 
+              Normalize[$CellContext`closestConeSpherePoint$ - 
+                 Part[$CellContext`testSphere$, 1]] Min[
+                 
+                 Norm[$CellContext`closestConeSpherePoint$ - 
+                  Part[$CellContext`testSphere$, 1]], 
+                 Part[$CellContext`testSphere$, 2]]}]}], 
+          Graphics[
+           $CellContext`coneGraphics[$CellContext`testCone$]], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle1$$, 0, 2 Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7009639251748323`*^9, 3.701045642358776*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "Cone", " ", "vs", " ", "sphere", " ", "on", " ", "grid", " ", "of", " ", 
+     "vertices"}], " ", "-", " ", 
+    RowBox[{
+     RowBox[{"cheap", " ", "/", " ", "approx"}], " ", "test"}]}], " ", 
+   "*)"}]}]], "Input",
+ CellChangeTimes->{{3.700965143694733*^9, 3.7009651585826235`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"testCone", ",", "angles"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"testCone", " ", "=", " ", 
+       RowBox[{"makeCone", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Cos", "[", "angle", "]"}], ",", 
+              RowBox[{"Sin", "[", "angle", "]"}]}], "}"}]}], "*", "0.5"}], 
+          "+", 
+          RowBox[{"{", 
+           RowBox[{"0.5", ",", "1.0"}], "}"}]}], ",", 
+         RowBox[{"\[Pi]", "/", "20"}], ",", 
+         RowBox[{"-", "angle"}], ",", "2.0"}], "]"}]}], ";", 
+      RowBox[{"Show", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Module", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+             "testSphere", ",", "coneSphereAxisL", ",", "coneSpereAxis", ",", 
+              "coneSphereAxisPerp", ",", "closestConeSpherePoint"}], "}"}], 
+            ",", 
+            RowBox[{
+             RowBox[{"testSphere", "=", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"x", ",", "y"}], "}"}], ",", 
+                RowBox[{"0.1", "*", 
+                 RowBox[{"Sqrt", "[", "2", "]"}]}]}], "}"}]}], ";", 
+             RowBox[{"coneSphereAxisL", "=", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"testSphere", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], "-", 
+                 RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+               RowBox[{"coneForward", "[", "testCone", "]"}]}]}], ";", 
+             RowBox[{"coneSpereAxis", "=", 
+              RowBox[{
+               RowBox[{"coneForward", "[", "testCone", "]"}], "*", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"testSphere", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}], "-", 
+                  RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+                RowBox[{"coneForward", "[", "testCone", "]"}]}]}]}], ";", 
+             RowBox[{"coneSphereAxisPerp", "=", 
+              RowBox[{
+               RowBox[{"testSphere", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "-", 
+               RowBox[{"coneCenter", "[", "testCone", "]"}], "-", 
+               RowBox[{
+                RowBox[{"coneForward", "[", "testCone", "]"}], "*", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "-", 
+                   RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+                 RowBox[{"coneForward", "[", "testCone", "]"}]}]}]}]}], ";", 
+             RowBox[{"coneSphereAxisPerp", "=", 
+              RowBox[{
+               RowBox[{"Min", "[", 
+                RowBox[{
+                 RowBox[{"Norm", "[", "coneSphereAxisPerp", "]"}], ",", 
+                 RowBox[{
+                  RowBox[{"Norm", "[", "coneSpereAxis", "]"}], "*", 
+                  RowBox[{"Tan", "[", 
+                   RowBox[{"coneAngle", "[", "testCone", "]"}], "]"}]}]}], 
+                "]"}], "*", 
+               RowBox[{"Normalize", "[", "coneSphereAxisPerp", "]"}]}]}], ";",
+              "\[IndentingNewLine]", 
+             RowBox[{"closestConeSpherePoint", "=", 
+              RowBox[{"coneSpereAxis", "+", "coneSphereAxisPerp", "+", 
+               RowBox[{"coneCenter", "[", "testCone", "]"}]}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"Graphics", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"Norm", "[", 
+                    RowBox[{"closestConeSpherePoint", "-", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "<", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "&&", 
+                   RowBox[{"coneSphereAxisL", ">", 
+                    RowBox[{"-", " ", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}]}], "&&", 
+                   RowBox[{"coneSphereAxisL", "<", 
+                    RowBox[{
+                    RowBox[{"coneLength", "[", "testCone", "]"}], "+", " ", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}]}]}], ",", "Red", ",", 
+                  "Green"}], "]"}], ",", 
+                RowBox[{"Opacity", "[", "0.5", "]"}], ",", 
+                RowBox[{"Circle", "[", 
+                 RowBox[{
+                  RowBox[{"testSphere", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}], ",", 
+                  RowBox[{"testSphere", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+                RowBox[{"Opacity", "[", "0.2", "]"}], ",", 
+                RowBox[{"Rectangle", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{"x", ",", "y"}], "}"}], "-", "0.09"}], ",", 
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{"x", ",", "y"}], "}"}], "+", "0.09"}]}], "]"}]}], 
+               "}"}], "]"}]}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", 
+            RowBox[{"-", "0.25"}], ",", "2", ",", "0.2"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"y", ",", 
+            RowBox[{"-", "0.25"}], ",", "2", ",", "0.2"}], "}"}]}], "]"}], 
+        ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"coneGraphics", "[", "testCone", "]"}], "}"}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Black", ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}],
+         ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"angle", ",", "0", ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.701046093565431*^9, 3.7010461395816283`*^9}, {
+  3.701046196111103*^9, 3.701046199728588*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle$$ = 2.3114627715218563`, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle$274468$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle$$, $CellContext`angle$274468$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`angles$}, \
+$CellContext`testCone$ = $CellContext`makeCone[(-{
+               Cos[$CellContext`angle$$], 
+               Sin[$CellContext`angle$$]}) 0.5 + {0.5, 1.}, Pi/
+           20, -$CellContext`angle$$, 2.]; Show[
+          Table[
+           
+           Module[{$CellContext`testSphere$, $CellContext`coneSphereAxisL$, \
+$CellContext`coneSpereAxis$, $CellContext`coneSphereAxisPerp$, \
+$CellContext`closestConeSpherePoint$}, $CellContext`testSphere$ = \
+{{$CellContext`x, $CellContext`y}, 0.1 
+               Sqrt[2]}; $CellContext`coneSphereAxisL$ = 
+             Dot[Part[$CellContext`testSphere$, 
+                 1] - $CellContext`coneCenter[$CellContext`testCone$], 
+               $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSpereAxis$ = $CellContext`coneForward[$CellContext`testCone$]
+                Dot[Part[$CellContext`testSphere$, 
+                  1] - $CellContext`coneCenter[$CellContext`testCone$], 
+                $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSphereAxisPerp$ = 
+             Part[$CellContext`testSphere$, 
+                1] - $CellContext`coneCenter[$CellContext`testCone$] - \
+$CellContext`coneForward[$CellContext`testCone$] 
+              Dot[Part[$CellContext`testSphere$, 
+                  1] - $CellContext`coneCenter[$CellContext`testCone$], 
+                $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSphereAxisPerp$ = Min[
+                Norm[$CellContext`coneSphereAxisPerp$], 
+                Norm[$CellContext`coneSpereAxis$] Tan[
+                  $CellContext`coneAngle[$CellContext`testCone$]]] 
+              Normalize[$CellContext`coneSphereAxisPerp$]; \
+$CellContext`closestConeSpherePoint$ = $CellContext`coneSpereAxis$ + \
+$CellContext`coneSphereAxisPerp$ + \
+$CellContext`coneCenter[$CellContext`testCone$]; Graphics[{
+               If[
+                And[
+                Norm[$CellContext`closestConeSpherePoint$ - 
+                   Part[$CellContext`testSphere$, 1]] < 
+                 Part[$CellContext`testSphere$, 
+                   2], $CellContext`coneSphereAxisL$ > -
+                  Part[$CellContext`testSphere$, 
+                    2], $CellContext`coneSphereAxisL$ < \
+$CellContext`coneLength[$CellContext`testCone$] + 
+                  Part[$CellContext`testSphere$, 2]], Red, Green], 
+               Opacity[0.5], 
+               Circle[
+                Part[$CellContext`testSphere$, 1], 
+                Part[$CellContext`testSphere$, 2]], 
+               Opacity[0.2], 
+               
+               Rectangle[{$CellContext`x, $CellContext`y} - 
+                0.09, {$CellContext`x, $CellContext`y} + 
+                0.09]}]], {$CellContext`x, -0.25, 2, 
+            0.2}, {$CellContext`y, -0.25, 2, 0.2}], 
+          Graphics[{
+            $CellContext`coneGraphics[$CellContext`testCone$]}], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle$$, 0, 2 Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.700965161335206*^9, 3.7010456424425116`*^9, {3.701046115830756*^9, 
+   3.7010461400298777`*^9}, 3.7010462016877775`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Same", " ", "test"}], ",", " ", 
+    RowBox[{"long", " ", "frusta"}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Animate", "[", 
+   RowBox[{
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"testCone", ",", "angles"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"testCone", " ", "=", " ", 
+        RowBox[{"makeCone", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Cos", "[", "angle", "]"}], ",", 
+               RowBox[{"Sin", "[", "angle", "]"}]}], "}"}]}], "*", "0.5"}], 
+           "+", 
+           RowBox[{"{", 
+            RowBox[{"0.5", ",", "1.0"}], "}"}]}], ",", 
+          RowBox[{"\[Pi]", "/", "20"}], ",", 
+          RowBox[{"-", "angle"}], ",", "2.0"}], "]"}]}], ";", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"Module", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+              "testSphere", ",", "coneSphereAxisL", ",", "coneSpereAxis", ",",
+                "coneSphereAxisPerp", ",", "closestConeSpherePoint"}], "}"}], 
+             ",", 
+             RowBox[{
+              RowBox[{"testSphere", "=", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", "y"}], "}"}], ",", 
+                 RowBox[{"0.25", "*", 
+                  RowBox[{"Sqrt", "[", "2", "]"}]}]}], "}"}]}], ";", 
+              RowBox[{"coneSphereAxisL", "=", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"testSphere", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}], "-", 
+                  RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+                RowBox[{"coneForward", "[", "testCone", "]"}]}]}], ";", 
+              RowBox[{"coneSpereAxis", "=", 
+               RowBox[{
+                RowBox[{"coneForward", "[", "testCone", "]"}], "*", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "-", 
+                   RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], ".", 
+                 RowBox[{"coneForward", "[", "testCone", "]"}]}]}]}], ";", 
+              RowBox[{"coneSphereAxisPerp", "=", 
+               RowBox[{
+                RowBox[{"testSphere", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "-", 
+                RowBox[{"coneCenter", "[", "testCone", "]"}], "-", 
+                RowBox[{
+                 RowBox[{"coneForward", "[", "testCone", "]"}], "*", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "-", 
+                    RowBox[{"coneCenter", "[", "testCone", "]"}]}], ")"}], 
+                  ".", 
+                  RowBox[{"coneForward", "[", "testCone", "]"}]}]}]}]}], ";", 
+              RowBox[{"coneSphereAxisPerp", "=", 
+               RowBox[{
+                RowBox[{"Min", "[", 
+                 RowBox[{
+                  RowBox[{"Norm", "[", "coneSphereAxisPerp", "]"}], ",", 
+                  RowBox[{
+                   RowBox[{"Norm", "[", "coneSpereAxis", "]"}], "*", 
+                   RowBox[{"Tan", "[", 
+                    RowBox[{"coneAngle", "[", "testCone", "]"}], "]"}]}]}], 
+                 "]"}], "*", 
+                RowBox[{"Normalize", "[", "coneSphereAxisPerp", "]"}]}]}], 
+              ";", "\[IndentingNewLine]", 
+              RowBox[{"closestConeSpherePoint", "=", 
+               RowBox[{"coneSpereAxis", "+", "coneSphereAxisPerp", "+", 
+                RowBox[{"coneCenter", "[", "testCone", "]"}]}]}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"Graphics", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"Norm", "[", 
+                    RowBox[{"closestConeSpherePoint", "-", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "<", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "&&", 
+                    RowBox[{"coneSphereAxisL", ">", 
+                    RowBox[{"-", " ", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}]}], "&&", 
+                    RowBox[{"coneSphereAxisL", "<", 
+                    RowBox[{
+                    RowBox[{"coneLength", "[", "testCone", "]"}], "+", " ", 
+                    RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}]}]}], ",", "Red", ",", 
+                   "Green"}], "]"}], ",", 
+                 RowBox[{"Opacity", "[", "0.5", "]"}], ",", 
+                 RowBox[{"Circle", "[", 
+                  RowBox[{
+                   RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                   RowBox[{"testSphere", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+                 RowBox[{"Opacity", "[", "0.2", "]"}], ",", 
+                 RowBox[{"Rectangle", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"x", ",", "y"}], "}"}], "-", 
+                    RowBox[{"{", 
+                    RowBox[{"0.09", ",", "0.24"}], "}"}]}], ",", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"x", ",", "y"}], "}"}], "+", 
+                    RowBox[{"{", 
+                    RowBox[{"0.09", ",", "0.24"}], "}"}]}]}], "]"}]}], "}"}], 
+               "]"}]}]}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"-", "0.4"}], ",", "2", ",", "0.2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"y", ",", 
+             RowBox[{"-", "0.4"}], ",", "2", ",", "0.5"}], "}"}]}], "]"}], 
+         ",", "\[IndentingNewLine]", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"coneGraphics", "[", "testCone", "]"}], "}"}], "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"Black", ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "2"}], "}"}]}], "}"}], "]"}], ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+          "]"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5"}], ",", "2"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}],
+      "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"angle", ",", "0", ",", 
+      RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.700965436217891*^9, 3.7009654420694366`*^9}, {
+  3.7010461644650464`*^9, 3.7010461881239367`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`angle$$ = 0.25882390449223114`, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`angle$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`angle$270018$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`angle$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`angle$$, $CellContext`angle$270018$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`testCone$, $CellContext`angles$}, \
+$CellContext`testCone$ = $CellContext`makeCone[(-{
+               Cos[$CellContext`angle$$], 
+               Sin[$CellContext`angle$$]}) 0.5 + {0.5, 1.}, Pi/
+           20, -$CellContext`angle$$, 2.]; Show[
+          Table[
+           
+           Module[{$CellContext`testSphere$, $CellContext`coneSphereAxisL$, \
+$CellContext`coneSpereAxis$, $CellContext`coneSphereAxisPerp$, \
+$CellContext`closestConeSpherePoint$}, $CellContext`testSphere$ = \
+{{$CellContext`x, $CellContext`y}, 0.25 
+               Sqrt[2]}; $CellContext`coneSphereAxisL$ = 
+             Dot[Part[$CellContext`testSphere$, 
+                 1] - $CellContext`coneCenter[$CellContext`testCone$], 
+               $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSpereAxis$ = $CellContext`coneForward[$CellContext`testCone$]
+                Dot[Part[$CellContext`testSphere$, 
+                  1] - $CellContext`coneCenter[$CellContext`testCone$], 
+                $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSphereAxisPerp$ = 
+             Part[$CellContext`testSphere$, 
+                1] - $CellContext`coneCenter[$CellContext`testCone$] - \
+$CellContext`coneForward[$CellContext`testCone$] 
+              Dot[Part[$CellContext`testSphere$, 
+                  1] - $CellContext`coneCenter[$CellContext`testCone$], 
+                $CellContext`coneForward[$CellContext`testCone$]]; \
+$CellContext`coneSphereAxisPerp$ = Min[
+                Norm[$CellContext`coneSphereAxisPerp$], 
+                Norm[$CellContext`coneSpereAxis$] Tan[
+                  $CellContext`coneAngle[$CellContext`testCone$]]] 
+              Normalize[$CellContext`coneSphereAxisPerp$]; \
+$CellContext`closestConeSpherePoint$ = $CellContext`coneSpereAxis$ + \
+$CellContext`coneSphereAxisPerp$ + \
+$CellContext`coneCenter[$CellContext`testCone$]; Graphics[{
+               If[
+                And[
+                Norm[$CellContext`closestConeSpherePoint$ - 
+                   Part[$CellContext`testSphere$, 1]] < 
+                 Part[$CellContext`testSphere$, 
+                   2], $CellContext`coneSphereAxisL$ > -
+                  Part[$CellContext`testSphere$, 
+                    2], $CellContext`coneSphereAxisL$ < \
+$CellContext`coneLength[$CellContext`testCone$] + 
+                  Part[$CellContext`testSphere$, 2]], Red, Green], 
+               Opacity[0.5], 
+               Circle[
+                Part[$CellContext`testSphere$, 1], 
+                Part[$CellContext`testSphere$, 2]], 
+               Opacity[0.2], 
+               
+               Rectangle[{$CellContext`x, $CellContext`y} - {0.09, 
+                0.24}, {$CellContext`x, $CellContext`y} + {0.09, 
+                 0.24}]}]], {$CellContext`x, -0.4, 2, 
+            0.2}, {$CellContext`y, -0.4, 2, 0.5}], 
+          Graphics[{
+            $CellContext`coneGraphics[$CellContext`testCone$]}], 
+          Graphics[{Black, 
+            Arrow[{{0, 0}, {0, 2}}], 
+            Arrow[{{0, 0}, {2, 0}}]}], PlotRange -> {{-0.5, 2}, {-0.5, 2}}]], 
+      "Specifications" :> {{$CellContext`angle$$, 0, 2 Pi, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {215., 222.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.7009654429024153`*^9, 3.701045642548782*^9, {3.7010461661523466`*^9, 
+   3.701046188743318*^9}}]
+}, Open  ]]
+},
+WindowSize->{1406, 717},
+WindowMargins->{{3, Automatic}, {Automatic, 15}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (September 21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 627, 16, 88, "Input"],
+Cell[1188, 38, 3784, 123, 164, "Input"],
+Cell[4975, 163, 2494, 74, 164, "Input"],
+Cell[7472, 239, 2455, 66, 145, "Input"],
+Cell[9930, 307, 1025, 26, 88, "Input"],
+Cell[10958, 335, 211, 4, 30, "Input"],
+Cell[11172, 341, 3147, 96, 107, "Input"],
+Cell[14322, 439, 175, 3, 30, "Input"],
+Cell[14500, 444, 3074, 88, 164, "Input"],
+Cell[CellGroupData[{
+Cell[17599, 536, 1986, 54, 69, "Input"],
+Cell[19588, 592, 2595, 50, 320, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22220, 647, 3315, 88, 126, "Input"],
+Cell[25538, 737, 3083, 62, 454, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28658, 804, 5183, 134, 183, "Input"],
+Cell[33844, 940, 3535, 75, 454, "Output"]
+}, Open  ]],
+Cell[37394, 1018, 220, 5, 30, "Input"],
+Cell[CellGroupData[{
+Cell[37639, 1027, 5370, 143, 183, "Input"],
+Cell[43012, 1172, 3792, 80, 454, "Output"]
+}, Open  ]],
+Cell[46819, 1255, 208, 5, 30, "Input"],
+Cell[CellGroupData[{
+Cell[47052, 1264, 3641, 99, 145, "Input"],
+Cell[50696, 1365, 3282, 65, 454, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[54015, 1435, 4925, 129, 145, "Input"],
+Cell[58943, 1566, 3308, 69, 454, "Output"]
+}, Open  ]],
+Cell[62266, 1638, 329, 7, 30, "Input"],
+Cell[CellGroupData[{
+Cell[62620, 1649, 5321, 139, 126, "Input"],
+Cell[67944, 1790, 3103, 66, 470, "Output"]
+}, Open  ]],
+Cell[71062, 1859, 190, 4, 30, "Input"],
+Cell[CellGroupData[{
+Cell[71277, 1867, 8321, 215, 278, "Input"],
+Cell[79601, 2084, 5661, 118, 454, "Output"]
+}, Open  ]],
+Cell[85277, 2205, 187, 4, 30, "Input"],
+Cell[CellGroupData[{
+Cell[85489, 2213, 8133, 210, 278, "Input"],
+Cell[93625, 2425, 5596, 116, 454, "Output"]
+}, Open  ]],
+Cell[99236, 2544, 217, 5, 30, "Input"],
+Cell[CellGroupData[{
+Cell[99478, 2553, 8947, 229, 335, "Input"],
+Cell[108428, 2784, 6111, 125, 454, "Output"]
+}, Open  ]],
+Cell[114554, 2912, 378, 10, 50, "Input"],
+Cell[CellGroupData[{
+Cell[114957, 2926, 7175, 172, 202, "Input"],
+Cell[122135, 3100, 5080, 99, 454, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[127252, 3204, 7679, 182, 240, "Input"],
+Cell[134934, 3388, 5073, 99, 454, "Output"]
+}, Open  ]]
+}
+]
+*)
+
